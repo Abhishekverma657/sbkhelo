@@ -1,0 +1,83 @@
+
+   </div>
+  <script>
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    const themeToggle = document.getElementById('themeToggle');
+
+    // // Sidebar toggle
+    // menuBtn.addEventListener('click', () => {
+    //   sidebar.classList.toggle('hidden');
+    //   if (window.innerWidth < 768) {
+    //     sidebar.classList.contains('hidden') ? sidebar.style.transform = 'translateX(-250px)' : sidebar.style.transform = 'translateX(0)';
+    //   }
+    // });
+
+
+// Check saved theme on page load
+if (localStorage.getItem('theme') === 'dark') {
+    document.body.classList.add('dark');
+    themeToggle.textContent = '☀';
+} else {
+    document.body.classList.remove('dark');
+    themeToggle.textContent = '🌙';
+}
+
+// Toggle theme and save preference
+themeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark');
+
+    if (document.body.classList.contains('dark')) {
+        localStorage.setItem('theme', 'dark');
+        themeToggle.textContent = '☀';
+    } else {
+        localStorage.setItem('theme', 'light');
+        themeToggle.textContent = '🌙';
+    }
+});
+
+
+    // Theme toggle
+    // themeToggle.addEventListener('click', () => {
+    //   document.body.classList.toggle('dark');
+    //   themeToggle.textContent = document.body.classList.contains('dark') ? '☀' : '🌙';
+    // });
+
+    // Add event listener for window resize
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 768) {
+        sidebar.classList.remove('hidden');
+        sidebar.style.transform = '';
+      } else {
+        sidebar.classList.add('hidden');
+        sidebar.style.transform = 'translateX(-250px)';
+      }
+    });
+
+
+    // menuBtn.addEventListener('click', () => {
+    //   sidebar.classList.toggle('hidden');
+    // });
+    menuBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('hidden');
+      if (window.innerWidth < 768) {
+        if (sidebar.classList.contains('hidden')) {
+          sidebar.style.transform = 'translateX(-250px)';
+        } else {
+          sidebar.style.transform = 'translateX(0)';
+        }
+      }
+    });
+if (window.innerWidth < 768) {
+  sidebar.classList.add('hidden');
+  sidebar.style.transform = 'translateX(-250px)';
+} else {
+  sidebar.classList.remove('hidden');
+  sidebar.style.transform = '';
+}
+
+
+  </script>
+</body>
+
+</html>

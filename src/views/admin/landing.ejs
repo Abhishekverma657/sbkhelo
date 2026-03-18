@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sab Khelo Sab Jeeto - India's Premier Betting Game Platform</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gradient-to-br from-gray-100 to-green-100 text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-gradient-to-r from-green-700 to-green-500 shadow-lg sticky top-0 z-20">
+    <div class="container mx-auto max-w-6xl flex items-center justify-between px-4 py-4">
+      <div class="flex items-center space-x-3">
+        <span class="text-2xl font-bold text-white">🎯 Sab Khelo Sab Jeeto</span>
+      </div>
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex space-x-6">
+        <a href="#home" class="text-white hover:text-yellow-300 font-semibold">Home</a>
+        <a href="#games" class="text-white hover:text-yellow-300 font-semibold">Games</a>
+        <a href="#results" class="text-white hover:text-yellow-300 font-semibold">Results</a>
+        <a href="#about" class="text-white hover:text-yellow-300 font-semibold">About</a>
+        <a href="#contact" class="text-white hover:text-yellow-300 font-semibold">Contact</a>
+      </nav>
+      <a href="#"
+        class="hidden md:inline-block bg-yellow-400 text-green-900 font-bold px-6 py-2 rounded-full shadow hover:bg-yellow-300 transition">Play
+        Now</a>
+      <!-- Mobile Menu Toggle -->
+      <div class="md:hidden">
+        <button id="navToggle" class="text-white focus:outline-none text-2xl">&#9776;</button>
+      </div>
+    </div>
+    <!-- Mobile Menu -->
+    <nav id="mobileNav" class="md:hidden hidden flex-col bg-green-600 text-white px-4 py-2">
+      <a href="#home" class="block py-2 hover:bg-green-700 rounded">Home</a>
+      <a href="#games" class="block py-2 hover:bg-green-700 rounded">Games</a>
+      <a href="#results" class="block py-2 hover:bg-green-700 rounded">Results</a>
+      <a href="#about" class="block py-2 hover:bg-green-700 rounded">About</a>
+      <a href="#contact" class="block py-2 hover:bg-green-700 rounded">Contact</a>
+      <a href="#"
+        class="block py-2 mt-2 bg-yellow-400 text-green-900 font-bold rounded-full shadow hover:bg-yellow-300 transition text-center">Play
+        Now</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="home" class="text-center py-16 bg-green-50 ">
+   <div class="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-6">
+
+  <!-- Android Download -->
+  <a href="/SabKheloSabJeeto.apk"
+     class="flex items-center justify-center bg-yellow-400 text-green-900 font-bold px-8 py-3 rounded-full shadow hover:bg-yellow-300 transition text-lg"
+     download>
+
+    <!-- Android SVG -->
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M17.6 9.48l1.43-2.48a.5.5 0 10-.86-.5l-1.44 2.49a7.06 7.06 0 00-9.46 0L5.83 6.5a.5.5 0 10-.86.5l1.43 2.48A6.97 6.97 0 004 15v3a1 1 0 001 1h1v2a1 1 0 001 1h1a1 1 0 001-1v-2h6v2a1 1 0 001 1h1a1 1 0 001-1v-2h1a1 1 0 001-1v-3a6.97 6.97 0 00-2.4-5.52zM9 14H7v-2h2v2zm8 0h-2v-2h2v2z"/>
+    </svg>
+
+    Android Download
+  </a>
+
+  <!-- Windows Download -->
+  <!-- <a href="./SabKheloSabJeeto.zip"
+     class="flex items-center justify-center bg-white border-2 border-green-700 text-green-700 font-bold px-8 py-3 rounded-full shadow hover:bg-green-100 transition text-lg"
+     download>
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M0 3l9-1v9H0V3zm10-1l14-2v13H10V2zM0 13h9v9l-9-1v-8zm10 0h14v13l-14-2v-11z"/>
+    </svg>
+    Windows Download
+  </a> -->
+
+</div>
+
+    <section id="results" class="container mx-auto max-w-4xl py-12 px-4">
+      <h2 class="text-2xl sm:text-3xl md:text-4xl font-bold text-green-700 text-center mb-8">Live Game Results</h2>
+
+      <div class="rounded-xl shadow bg-white p-6 sm:p-8 overflow-x-auto">
+        <div class="flex flex-col sm:flex-row justify-between items-center mb-4 gap-2">
+          <p class="text-center sm:text-left text-sm sm:text-base font-medium">Game Id: <span id="gameid">--</span></p>
+          <span
+            class="bg-red-500 text-white text-xs sm:text-sm font-bold px-3 py-1 rounded-2xl animate-pulse">LIVE</span>
+        </div>
+
+        <div class="flex flex-col sm:flex-row justify-between items-center mb-4 gap-2">
+          <span class="font-bold text-base sm:text-lg text-green-700 text-center sm:text-left">Latest Server
+            Results</span>
+          <h2 class="text-sm sm:text-base">⏳ Timer: <span id="timer">--</span> sec</h2>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="min-w-full table-auto border text-center text-sm sm:text-base">
+            <thead class="bg-green-100 text-green-700 font-bold">
+              <tr>
+                <th class="px-3 py-2">Sr. No.</th>
+                <th class="px-3 py-2">Draw No.</th>
+                <th class="px-3 py-2">Multiple</th>
+                <th class="px-3 py-2">Draw Time</th>
+              </tr>
+            </thead>
+            <tbody id="results-body">
+              <tr>
+                <td colspan="4" class="text-gray-500 py-4 text-center">Loading results...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="flex justify-center mt-6">
+          <button onclick="moreload()" class="bg-green-600 text-white px-4 py-2 rounded-lg shadow text-sm sm:text-base">
+            More Load
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Company Info Section -->
+    <section id="about" class="container mx-auto max-w-6xl py-12 px-4">
+      <h2 class="text-3xl md:text-4xl font-bold text-green-700 text-center mb-10">About Sab Khelo Sab Jeeto</h2>
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-white rounded-xl shadow p-6 text-center">
+          <h3 class="font-bold text-xl text-green-600 mb-2">🏆 Our Mission</h3>
+          <p>To provide India's most exciting and fair betting experience. Enjoy secure, transparent gameplay with
+            instant rewards.</p>
+        </div>
+        <div class="bg-white rounded-xl shadow p-6 text-center">
+          <h3 class="font-bold text-xl text-green-600 mb-2">🔒 Security First</h3>
+          <p>Advanced encryption and regular audits ensure your data and transactions are safe. Trusted and compliant
+            platform.</p>
+        </div>
+        <div class="bg-white rounded-xl shadow p-6 text-center">
+          <h3 class="font-bold text-xl text-green-600 mb-2">⚡ Instant Payouts</h3>
+          <p>Automated payouts direct to your account, minutes after your win.</p>
+        </div>
+      </div>
+      <div class="flex flex-wrap justify-center gap-8 mt-10 bg-green-200 rounded-lg p-8 shadow">
+        <div class="text-center mx-4">
+          <span class="text-4xl font-bold text-green-700">100K+</span>
+          <div>Active Players</div>
+        </div>
+        <div class="text-center mx-4">
+          <span class="text-4xl font-bold text-green-700">₹50L+</span>
+          <div>Winnings Paid</div>
+        </div>
+   
+        <div class="text-center mx-4">
+          <span class="text-4xl font-bold text-green-700">24/7</span>
+          <div>Support</div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- Features Section -->
+    <section id="games" class="bg-green-50 py-12 px-4">
+      <h2 class="text-3xl md:text-4xl font-bold text-green-700 text-center mb-10">Why Choose Sab Khelo Sab Jeeto?</h2>
+      <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div class="bg-white rounded-lg shadow p-6 text-center flex flex-col items-center">
+          <span class="text-4xl mb-2">🎲</span>
+          <h4 class="font-bold text-green-600 mb-2">Fair Gaming</h4>
+          <p>Provably fair algorithms ensure transparent, unbiased play.</p>
+        </div>
+        <div class="bg-white rounded-lg shadow p-6 text-center flex flex-col items-center">
+          <span class="text-4xl mb-2">💰</span>
+          <h4 class="font-bold text-green-600 mb-2">Big Winnings</h4>
+          <p>Win up to 100x your bet with exciting multipliers.</p>
+        </div>
+        <div class="bg-white rounded-lg shadow p-6 text-center flex flex-col items-center">
+          <span class="text-4xl mb-2">📱</span>
+          <h4 class="font-bold text-green-600 mb-2">Mobile Friendly</h4>
+          <p>Play anywhere, anytime. Fully responsive design.</p>
+        </div>
+        <div class="bg-white rounded-lg shadow p-6 text-center flex flex-col items-center">
+          <span class="text-4xl mb-2">🔄</span>
+          <h4 class="font-bold text-green-600 mb-2">Quick Rounds</h4>
+          <p>New game rounds every 5 minutes.</p>
+        </div>
+        <div class="bg-white rounded-lg shadow p-6 text-center flex flex-col items-center">
+          <span class="text-4xl mb-2">🎁</span>
+          <h4 class="font-bold text-green-600 mb-2">Daily Bonuses</h4>
+          <p>Free credits and bonus rounds each day you play.</p>
+        </div>
+        <div class="bg-white rounded-lg shadow p-6 text-center flex flex-col items-center">
+          <span class="text-4xl mb-2">🏅</span>
+          <h4 class="font-bold text-green-600 mb-2">VIP Rewards</h4>
+          <p>Unlock exclusive benefits, higher limits as you play more.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer id="contact" class="bg-green-800 text-white py-12 px-6">
+     
+
+      <!-- Bottom Note -->
+      <div class="text-center border-t border-green-700 pt-6 text-sm text-gray-200">
+        &copy; 2018 Sab Khelo Sab Jeeto. All rights reserved. | Play responsibly. |
+        <strong>18+ Only</strong> | Licensed Gaming Platform | SSL Secured
+      </div>
+    </footer>
+
+
+
+    <!-- Mobile nav script -->
+    <script>
+      let limit = 170;
+      const navToggle = document.getElementById('navToggle');
+      const mobileNav = document.getElementById('mobileNav');
+      navToggle.addEventListener('click', () => {
+        mobileNav.classList.toggle('hidden');
+      });
+
+      // OPTIONAL: Smooth section scroll
+      document.querySelectorAll('a[href^=\"#\"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start'
+            });
+            mobileNav.classList.add('hidden');
+          }
+        });
+      });
+    </script>
+    <script>
+      async function fetchResults() {
+        try {
+          const res = await fetch("/backresult", {
+            method: "POST", // ✅ change to POST
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              // ✅ if API needs parameters, put here
+              limit: limit
+            }),
+          });
+
+          const data = await res.json();
+
+          if (data.status === 1 && Array.isArray(data.data)) {
+            document.getElementById("gameid").innerHTML = data.data[0].gameid;
+            const latest = data.data.slice(0, limit); // latest 5
+            const tbody = document.getElementById("results-body");
+
+            tbody.innerHTML = latest
+              .map((item, index) => {
+                // ✅ format date
+                const time = new Date(item.time).toLocaleString("en-IN", {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric",
+                  hour: "2-digit",
+                  minute: "2-digit",
+                  second: "2-digit",
+                  hour12: true,
+                });
+
+                return `
+              <tr class="${index % 2 === 0
+                    ? "hover:bg-green-50"
+                    : "bg-green-50 hover:bg-green-100"
+                  }">
+                <td class="px-4 py-2">${index + 1}</td>
+                <td class="px-4 py-2 font-bold text-green-600">${item.result}</td>
+                <td class="px-4 py-2">
+                  <span class="bg-yellow-200 text-green-800 rounded px-3 py-1 font-semibold">${item.xvalue}x</span>
+                </td>
+                <td class="px-4 py-2">${time}</td>
+              </tr>`;
+              })
+              .join("");
+          }
+        } catch (err) {
+          console.error("Error fetching results:", err);
+        }
+      }
+
+      // ✅ first load
+      fetchResults();
+
+      function moreload() {
+        limit += 10;
+        fetchResults();
+      }
+
+    </script>
+
+
+    <script>
+      let slotDuration = 300;       // total round duration in seconds
+      let bettingCloseTime = 5;    // last X seconds betting closed
+      let delay = 9000;           // 10s delay like your C# code
+
+      function updateTimer() {
+        // current time in ms (with delay)
+        let nowMs = Date.now() - delay;
+        let cycleMs = slotDuration * 1000;
+
+        // modulus to stay inside current round
+        let mod = nowMs % cycleMs;
+        if (mod < 0) mod += cycleMs;
+
+        // remaining time in sec
+        let remaining = (cycleMs - mod) / 1000;
+        let remainingSeconds = Math.ceil(remaining);
+
+        // betting allowed?
+        let isBettingAllowed = remaining > bettingCloseTime;
+
+        // update UI
+        document.getElementById("timer").textContent = remainingSeconds;
+        if (remainingSeconds < 2) {
+          fetchResults();
+        }
+
+      }
+
+      // run once immediately
+      updateTimer();
+
+      // update every 1 sec
+      setInterval(updateTimer, 1000);
+    </script>
+
+</body>
+
+</html>

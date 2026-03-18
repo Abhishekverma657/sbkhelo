@@ -1,0 +1,191 @@
+<%- include('../layout/header') %>
+<style>
+    /* Table styling for alignment */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    td {
+        text-align: center;
+        vertical-align: middle;
+        padding: 10px;
+    }
+
+    /* Switch button styling */
+    .form-check-input {
+        position: relative;
+        width: 60px;
+        height: 30px;
+        -webkit-appearance: none;
+        appearance: none;
+        background-color: #ddd;
+        border-radius: 30px;
+        outline: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        border: none; /* Remove default border */
+    }
+
+    .form-check-input:checked {
+        background-color: #4caf50;
+    }
+
+    /* The circle inside the switch */
+    .form-check-input::before {
+        content: '';
+        position: absolute;
+        top: 5px;
+        left: 5px;
+        width: 20px;
+        height: 20px;
+        background-color: #fff;
+        border-radius: 50%;
+        transition: transform 0.3s ease;
+    }
+
+    .form-check-input:checked::before {
+        transform: translateX(30px);
+    }
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<div class="card pt-5">
+
+</div>
+<div class="card">
+    <div class="card-header">
+      <div class="card-title">Game Pool</div>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Game Name</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="selfBonusT">
+            <!-- backend -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="de">
+    <div id="myModal" class="modal fade">
+      <div class="modal-dialog modal-confirm">
+        <div class="modal-content">
+        <i class="bi bi-exclamation-circle text-danger" style="font-size:2rem"></i>
+          <div class="modal-body">
+            <p>Do you really want to Game On/Off ? This process cannot be undone.</p>
+          </div>
+          <form action="controller/controller.php" method="post">
+          <div class="modal-footer">
+            <input type="hidden" name="iddd" id="sildid">
+            <button type="button" class="btn btn-info" data-dismiss="modal">Cancel</button>
+            <button type="button" onclick="submt()" name="gameactive1" class="btn btn-danger">Change</button>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+    </div>
+    <!-- deltet modal -->
+
+    
+<script>
+  function newuser(){
+    $.ajax({
+      url: '/AllgameStart', 
+      type: 'POST',
+      success: function (response) {
+        const user =response;
+        if (response.Qstatus == 1) {
+          const ve = user.Redata;
+          const table = document.getElementById("selfBonusT");
+          table.innerHTML = "";
+
+          ve.forEach((element) => {
+              // Create a container for each user
+              const row = document.createElement("tr");
+              let td = `
+              <td scope="row">${element.id}</td>
+              <td>${element.name}</</td>
+             <td> <input class="form-check-input"  ${(element.active == 0) ? '' : 'checked'} type="checkbox" style="font-size:1.5rem;" onclick="edit(this)" data-da="${element.id}" id="flexSwitchCheckDefault"></td>`;
+            row.innerHTML = td;
+              table.appendChild(row);
+          });
+      }
+
+      }
+    });
+  }
+  newuser();
+
+  function addSelfD(){
+    let amount = document.getElementById("addAmount").value;
+    let AddBonus = document.getElementById("AddBonus").value;
+    if(!amount || !AddBonus){
+      swal("Error", "Both Aamount and Bonus limits are required.", "error");
+      return;
+    }
+    const resData  ={
+      amount,AddBonus
+    };
+    $.ajax({
+      url : "addSelfDeposit",
+      type : 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(resData),
+      success: function (respona) {
+        if(respona.Qstatus == 1){
+          swal("Success", respona.message, "success");
+          newuser();
+        }else{
+          swal("Error", respona.message, "error");
+
+        }
+      }
+    });
+  }
+
+var on  ;
+var idd ;
+function edit(checkbox) {
+      if(checkbox.checked){
+        on = 1;
+      } else {
+        on = 0;
+      }
+    idd = checkbox.getAttribute("data-da");
+    document.getElementById("sildid").value = idd;
+    $('#myModal').modal('show');
+    console.log(idd);   
+}
+
+function submt(){
+    const sendD = {
+        idd, on
+    };
+        $.ajax({
+         type: "POST",
+         url: "gameactiveA",
+         contentType: 'application/json',
+         data: JSON.stringify(sendD),
+         success:function(response){
+             if(response.Qstatus == 1){
+                 console.log(response.Qstatus);
+                    swal("Success", response.message, "success");
+                }else{
+                    swal("Error", response.message, "error");
+             }
+         }
+    })
+    $('#myModal').modal('hide');
+}
+</script>
+
+<%- include('../layout/footer') %>

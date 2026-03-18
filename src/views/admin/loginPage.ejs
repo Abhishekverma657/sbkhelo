@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Super Admin OTP Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </head>
+  <body>
+    <section class="ftco-section">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-6 col-lg-5">
+            <div class="login-wrap p-4 p-md-5">
+              <div class="icon d-flex align-items-center justify-content-center">
+                <span class="fa fa-user-o"></span>
+              </div>
+              <h3 class="text-center mb-4">Super Admin Login</h3>
+
+              <form id="loginForm" class="login-form">
+                <div class="form-group">
+                  <input type="text" id="username" name="username" class="form-control rounded-left" placeholder="Username" required>
+                </div>
+                <div class="form-group d-flex">
+                  <input type="password" id="password" name="password" class="form-control rounded-left" placeholder="Password" required>
+                </div>
+                <div class="form-group">
+                  <button type="button" id="sendOtpBtn" class="btn btn-primary rounded submit p-3 px-5 w-100">Send OTP</button>
+                </div>
+              </form>
+
+              <form id="otpForm" class="login-form mt-3" style="display: none;">
+                <div class="form-group">
+                  <input type="text" id="otp" name="otp" class="form-control rounded-left" placeholder="Enter OTP" required>
+                </div>
+                <div class="form-group">
+                  <button type="button" id="verifyOtpBtn" class="btn btn-success rounded submit p-3 px-5 w-100">Verify OTP</button>
+                </div>
+              </form>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      let currentUsername = "";
+
+      // Step 1: Send OTP
+      $("#sendOtpBtn").click(async (e) => {
+        e.preventDefault();
+        const username = $("#username").val().trim();
+        const password = $("#password").val().trim();
+
+        if (!username || !password) {
+          return Swal.fire("Warning", "Please enter username and password.", "warning");
+        }
+
+        Swal.showLoading();
+
+        try {
+          const res = await fetch("/adminsendotp", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password }),
+          });
+          const data = await res.json();
+          Swal.close();
+
+          if (data.status == 1) {
+            currentUsername = username;
+            Swal.fire("OTP Sent", data.message, "success");
+            $("#loginForm").hide();
+            $("#otpForm").fadeIn();
+          } else {
+            Swal.fire("Error", data.message, "error");
+          }
+        } catch (err) {
+          Swal.fire("Error", "Server not responding.", "error");
+        }
+      });
+
+      // Step 2: Verify OTP
+      $("#verifyOtpBtn").click(async (e) => {
+        e.preventDefault();
+        const otp = $("#otp").val().trim();
+
+        if (!otp) {
+          return Swal.fire("Warning", "Please enter OTP.", "warning");
+        }
+
+        Swal.showLoading();
+
+        try {
+          const res = await fetch("/adminotpverify", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username: currentUsername, otp }),
+          });
+          const data = await res.json();
+          Swal.close();
+
+          if (data.status) {
+            Swal.fire("Success", "Login successful!", "success").then(() => {
+              window.location.href = "/super/dashboard";
+            });
+          } else {
+            Swal.fire("Error", data.message, "error");
+          }
+        } catch (err) {
+          Swal.fire("Error", "Server not responding.", "error");
+        }
+      });
+    </script>
+  </body>
+</html>

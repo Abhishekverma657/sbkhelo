@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Kaiadmin - Bootstrap 5 Admin Dashboard</title>
+  <meta content="width=device-width, initial-scale=1.0, shrink-to-fit=no" name="viewport" />
+  <link rel="icon" href="/assets/img/kaiadmin/favicon.ico" type="image/x-icon" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <script src="/assets/js/plugin/webfont/webfont.min.js"></script>
+  <script>
+    WebFont.load({
+      google: { families: ["Public Sans:300,400,500,600,700"] },
+      custom: {
+        families: [
+          "Font Awesome 5 Solid",
+          "Font Awesome 5 Regular",
+          "Font Awesome 5 Brands",
+          "simple-line-icons",
+        ],
+        urls: ["/assets/css/fonts.min.css"],
+      },
+      active: function () {
+        sessionStorage.fonts = true;
+      },
+    });
+  </script>
+
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/assets/css/plugins.min.css" />
+  <link rel="stylesheet" href="/assets/css/kaiadmin.min.css" />
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link rel="stylesheet" href="/assets/css/demo.css" />
+  <style>
+    .cursor {
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <!-- Sidebar -->
+    <div class="sidebar" data-background-color="dark">
+      <div class="sidebar-logo">
+        <!-- Logo Header -->
+        <div class="logo-header" data-background-color="dark">
+          <a href="/super/dashboard" class="logo">
+            <img src="/assets/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand" height="20" />
+          </a>
+          <div class="nav-toggle">
+            <button class="btn btn-toggle toggle-sidebar">
+              <i class="gg-menu-right"></i>
+            </button>
+            <button class="btn btn-toggle sidenav-toggler">
+              <i class="gg-menu-left"></i>
+            </button>
+          </div>
+          <button class="topbar-toggler more">
+            <i class="gg-more-vertical-alt"></i>
+          </button>
+        </div>
+        <!-- End Logo Header -->
+      </div>
+      <div class="sidebar-wrapper scrollbar scrollbar-inner">
+        <div class="sidebar-content">
+          <ul class="nav nav-secondary">
+
+            <li class="nav-item">
+              <a href="/super/dashboard" class="nav-link">
+                <i class="fas fa-chart-line"></i>
+                <p>Dashboard</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="/super/player" class="nav-link">
+                <i class="fas fa-users"></i>
+                <p>User</p>
+              </a>
+            </li>
+            <li class="nav-item" style="display: none;">
+              <a data-bs-toggle="collapse" href="#deposit" class="nav-link collapsed">
+                <i class="fas fa-wallet"></i>
+                <p>Deposite</p>
+                <span class="caret"></span>
+              </a>
+              <div class="collapse" id="deposit">
+                <ul class="nav nav-collapse">
+                  <li><a href="/super/pendingdeposti"><span class="sub-item">Pending</span></a></li>
+                  <li><a href="/super/successdeposti"><span class="sub-item">Success</span></a></li>
+                  <li><a href="/super/rejectdeposti"><span class="sub-item">Reject</span></a></li>
+                </ul>
+              </div>
+            </li>
+            <li class="nav-item" style="display: none;">
+              <a data-bs-toggle="collapse" href="#Withdrawl" class="nav-link collapsed">
+                <i class="fas fa-wallet"></i>
+                <p>Withdrawl</p>
+                <span class="caret"></span>
+              </a>
+              <div class="collapse" id="Withdrawl">
+                <ul class="nav nav-collapse">
+                  <li><a href="/super/pendingwithdrawl"><span class="sub-item">Pending</span></a></li>
+                  <li><a href="/super/successwithdrawl"><span class="sub-item">Success</span></a></li>
+                  <li><a href="/super/rejectwithdrawl"><span class="sub-item">Reject</span></a></li>
+                  <!-- <li><a href="/super/getwaywithdrawl"><span class="sub-item">Gateway Withdrawl</span></a></li> -->
+                </ul>
+              </div>
+            </li>
+
+
+            <li class="nav-item">
+              <a data-bs-toggle="collapse" href="#forms" class="nav-link collapsed">
+                <i class="fas fa-cogs"></i>
+                <p>Setting</p>
+                <span class="caret"></span>
+              </a>
+              <div class="collapse" id="forms">
+                <ul class="nav nav-collapse">
+                  <li><a href="/super/settingcommission"><span class="sub-item">Commission</span></a></li>
+                </ul>
+              </div>
+            </li>
+
+            <li class="nav-item">
+              <a href="/super/betting" class="nav-link">
+                <i class="fas fa-dice"></i>
+                <p>Betting</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="/super/records" class="nav-link">
+                <i class="fas fa-list-alt"></i>
+                <p>records</p>
+              </a>
+            </li>
+
+            <li class="nav-item ">
+              <a href="/super/result" class="nav-link">
+                <i class="fas fa-trophy"></i>
+                <p>Result</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="/super/profile" class="nav-link">
+                <i class="fas fa-user"></i>
+                <p>Profile</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="/super/add-rech" class="nav-link">
+                <i class="fas fa-plus-circle"></i>
+                <p>Add Recharge</p>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a href="/superadmin" class="nav-link">
+                <i class="fas fa-sign-out-alt"></i>
+                <p>Logout</p>
+              </a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+
+      <script>
+
+        // ✅ Highlight active page based on current URL
+        document.querySelectorAll(".nav-link").forEach(link => {
+          if (link.href === window.location.href) {
+            link.classList.add("active");
+            const parentCollapse = link.closest(".collapse");
+            if (parentCollapse) {
+              parentCollapse.classList.add("show");
+              const parentTrigger = parentCollapse.previousElementSibling;
+              if (parentTrigger) parentTrigger.classList.remove("collapsed");
+            }
+          }
+        });
+      </script>
+
+      <style>
+        /* ✅ Active link style */
+        .nav-link.active {
+          background: #2b2b2b;
+          color: #986868 !important;
+          border-radius: 6px;
+        }
+
+        .nav-link.active i {
+          color: #00d1b2;
+        }
+      </style>
+
+    </div>
+    <!-- End Sidebar -->
+
+    <div class="main-panel">
+      <div class="main-header">
+        <div class="main-header-logo">
+          <!-- Logo Header -->
+          <div class="logo-header" data-background-color="dark">
+            <a href="index.html" class="logo">
+              <img src="/assets/img/kaiadmin/logo_light.svg" alt="navbar brand" class="navbar-brand" height="20" />
+            </a>
+
+            <div class="nav-toggle">
+              <button class="btn btn-toggle toggle-sidebar">
+                <i class="gg-menu-right"></i>
+              </button>
+              <button class="btn btn-toggle sidenav-toggler">
+                <i class="gg-menu-left"></i>
+              </button>
+            </div>
+            <button class="topbar-toggler more">
+              <i class="gg-more-vertical-alt"></i>
+            </button>
+          </div>
+          <!-- End Logo Header -->
+        </div>
+
+        <style>
+          /* Make navbar relative so center works */
+          .navbar-header {
+            position: relative;
+            min-height: 70px;
+          }
+
+          /* Center timer + background */
+          .navbar-header .header-time {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+
+            background: #111827;
+            /* dark bg */
+            color: #ffffff;
+            padding: 6px 16px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 15px;
+            gap: 6px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+          }
+
+          /* Clock icon size */
+          .navbar-header .header-time i {
+            font-size: 16px;
+          }
+        </style>
+
+
+        <!-- Navbar Header -->
+        <nav class="navbar navbar-header navbar-header-transparent navbar-expand-lg border-bottom">
+          
+       <button class="btn btn-outline-primary btn-sm" onclick="openFullscreen()">Go Fullscreen</button>
+          <!-- <div class="container-fluid d-flex align-items-center"> -->
+          <!-- ⏰ Timer UI -->
+          <div class="header-time d-flex align-items-center me-3">
+            <i class="fa-solid fa-clock"></i>
+            <span id="time11">00:00</span>
+          </div>
+
+          <div class="container-fluid">
+            <ul class="navbar-nav topbar-nav ms-md-auto align-items-center">
+              <li class="nav-item topbar-user dropdown hidden-caret">
+                <a class="dropdown-toggle profile-pic" data-bs-toggle="dropdown" href="#" aria-expanded="false">
+                  <div class="avatar-sm">
+                    <img src="/assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle" />
+                  </div>
+
+                  <span class="profile-username">
+                    <span class="op-7">Hi,</span>
+                    <span class="fw-bold">Sab Jeeto</span>
+                  </span>
+                </a>
+                <ul class="dropdown-menu dropdown-user animated fadeIn">
+                  <div class="dropdown-user-scroll scrollbar-outer">
+                    <li>
+                      <div class="user-box">
+                        <div class="avatar-lg">
+                          <img src="/assets/img/profile.jpg" alt="image profile" class="avatar-img rounded" />
+                        </div>
+                        <div class="u-text">
+                          <h4>Sab Jeeto</h4>
+                          <p class="text-muted">SabJeeto@gmail.com</p>
+                          <a href="/super/profile" class="btn btn-xs btn-secondary btn-sm">View Profile</a>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">My Profile</a>
+                      <a class="dropdown-item" href="#">My Balance</a>
+                      <a class="dropdown-item" href="#">Inbox</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Account Setting</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Logout</a>
+                    </li>
+                  </div>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <!-- End Navbar -->
+      </div>
+
+
+  <script>
+    function openFullscreen() {
+      document.documentElement.requestFullscreen();
+    }
+  </script>

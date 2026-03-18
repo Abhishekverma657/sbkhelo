@@ -1,0 +1,1128 @@
+<%- include('layout/header') %>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --success-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --warning-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            --danger-gradient: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            --info-gradient: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        }
+
+        body {
+            background-color: #f8f9fa;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        .stat-card {
+            border: none;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            height: 100%;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+
+        .icon-blue {
+            background-color: #dbeafe;
+            color: #2563eb;
+        }
+
+        .icon-yellow {
+            background-color: #fef3c7;
+            color: #d97706;
+        }
+
+        .icon-green {
+            background-color: #d1fae5;
+            color: #059669;
+        }
+
+        .icon-orange {
+            background-color: #fed7aa;
+            color: #ea580c;
+        }
+
+        .icon-emerald {
+            background-color: #a7f3d0;
+            color: #047857;
+        }
+
+        .icon-purple {
+            background-color: #e9d5ff;
+            color: #9333ea;
+        }
+
+        .icon-indigo {
+            background-color: #e0e7ff;
+            color: #4f46e5;
+        }
+
+        .icon-rose {
+            background-color: #fecdd3;
+            color: #e11d48;
+        }
+
+        .profit-card {
+            background: var(--success-gradient);
+            color: white;
+            border: none;
+        }
+
+        .profit-card .stat-icon {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .filter-card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-filter {
+            background: var(--info-gradient);
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-filter:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        }
+
+        .table-card {
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .table thead {
+            background-color: #f8f9fa;
+        }
+
+        .table thead th {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: #6b7280;
+            letter-spacing: 0.05em;
+            border-bottom: 2px solid #e5e7eb;
+            padding: 1rem 1.5rem;
+        }
+
+        .table tbody td {
+            padding: 1rem 1.5rem;
+            vertical-align: middle;
+        }
+
+        .badge-status {
+            padding: 0.375rem 0.75rem;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin: 0;
+            color: #ffffff;
+        }
+
+        .profit-card .stat-value {
+            color: white;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 0.25rem;
+            font-weight: 500;
+        }
+
+        .profit-card .stat-label {
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            color: #6b7280;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 0.25rem rgba(59, 130, 246, 0.25);
+        }
+
+        .icon-btn {
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .icon-btn:hover {
+            background-color: #e5e7eb;
+        }
+
+        .loading-spinner {
+            color: #3b82f6;
+        }
+
+        @media (max-width: 768px) {
+            .stat-value {
+                font-size: 1.5rem;
+            }
+
+            .page-title {
+                font-size: 1.75rem;
+            }
+        }
+
+
+        /* <style> */
+        /* ================= DASHBOARD CARDS ================= */
+
+        .stat-card {
+            border: none;
+            border-radius: 16px;
+            transition: all .25s ease;
+            cursor: pointer;
+            background: linear-gradient(135deg, #1f2933, #111827);
+            color: #fff;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, .35);
+        }
+
+        .stat-label {
+            font-size: 13px;
+            opacity: .8;
+        }
+
+        .stat-value {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: .5px;
+        }
+
+        /* ICON BOX */
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: #fff;
+        }
+
+        /* COLORS */
+
+        .icon-blue {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+        }
+
+        .icon-green {
+            background: linear-gradient(135deg, #22c55e, #15803d);
+        }
+
+        .icon-yellow {
+            background: linear-gradient(135deg, #facc15, #ca8a04);
+        }
+
+        .icon-orange {
+            background: linear-gradient(135deg, #fb923c, #ea580c);
+        }
+
+        .icon-purple {
+            background: linear-gradient(135deg, #a855f7, #7e22ce);
+        }
+
+        .icon-indigo {
+            background: linear-gradient(135deg, #6366f1, #4338ca);
+        }
+
+        .icon-rose {
+            background: linear-gradient(135deg, #fb7185, #be123c);
+        }
+
+        .icon-emerald {
+            background: linear-gradient(135deg, #10b981, #047857);
+        }
+
+        /* PROFIT CARD */
+
+        .profit-card {
+            background: linear-gradient(135deg, #064e3b, #022c22);
+        }
+
+        .profit-positive {
+            background: linear-gradient(135deg, #16a34a, #065f46) !important;
+        }
+
+        .profit-negative {
+            background: linear-gradient(135deg, #dc2626, #7f1d1d) !important;
+        }
+
+        /* MOBILE */
+
+        @media(max-width:768px) {
+            .stat-value {
+                font-size: 18px
+            }
+        }
+    </style>
+    <script>
+
+    </script>
+    </head>
+
+    <body>
+        <div class="min-vh-100">
+            <!-- Main Content -->
+            <div class="container py-4">
+
+                <!-- Page Header -->
+                <div class="page-header">
+                    <h1 class="page-title">Dashboard</h1>
+                    <p class="page-subtitle">Monitor your business performance and analytics</p>
+                </div>
+
+                <!-- Date Filters -->
+                <div class="card filter-card mb-4">
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-5">
+                                <label for="startDate" class="form-label fw-medium">Start Date</label>
+                                <input type="date" id="startDate" class="form-control">
+                            </div>
+                            <div class="col-md-5">
+                                <label for="endDate" class="form-label fw-medium">End Date</label>
+                                <input type="date" id="endDate" class="form-control">
+                            </div>
+                            <div class="col-md-2 d-flex align-items-end">
+                                <button id="filterButton" type="button" onclick="DataSave()"
+                                    class="btn btn-primary btn-filter w-100">
+                                    <i class="fas fa-filter me-2"></i>Filter
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics Cards Grid -->
+                <div class="row g-4 mb-4">
+
+                    <!-- Total Users Card -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                        <div class="card stat-card shadow-sm" onclick="window.location.href='/super/player'">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="stat-icon icon-blue">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <div class="ms-3 flex-grow-1">
+                                        <p class="stat-label mb-1">Agnet Wallet </p>
+                                        <p class="stat-value" id="user_total_amount">Loading...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Total Users Card -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                        <div class="card stat-card shadow-sm" onclick="window.location.href='/super/player'">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="stat-icon icon-blue">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <div class="ms-3 flex-grow-1">
+                                        <p class="stat-label mb-1">Admin Wallet </p>
+                                        <p class="stat-value" id="agent_total_amount">Loading...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Total Users Card -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3" style="display: none;">
+                        <div class="card stat-card shadow-sm" >
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="stat-icon icon-blue">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <div class="ms-3 flex-grow-1">
+                                        <p class="stat-label mb-1">Take </p>
+                                        <p class="stat-value" id="take">Loading...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Total Users Card -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                        <div class="card stat-card shadow-sm" onclick="window.location.href='/super/player'">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="stat-icon icon-blue">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <div class="ms-3 flex-grow-1">
+                                        <p class="stat-label mb-1">Total Users</p>
+                                        <p class="stat-value" id="user">Loading...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Total Users Card -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                        <div class="card stat-card shadow-sm" onclick="window.location.href='/super/player'">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="stat-icon icon-blue">
+                                        <i class="fas fa-users"></i>
+                                    </div>
+                                    <div class="ms-3 flex-grow-1">
+                                        <p class="stat-label mb-1">Total Agent</p>
+                                        <p class="stat-value" id="agnet">Loading...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <!-- Profit Card -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                        <div class="card stat-card profit-card shadow-sm"
+                            onclick="window.location.href='/super/settingcommission'">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="ms-3 flex-grow-1">
+                                        <p class="stat-label mb-1">Admin Pool</p>
+                                        <p class="stat-value" id="pool">₹ Loading...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profit Card -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                        <div class="card stat-card profit-card shadow-sm"
+                            onclick="window.location.href='/super/settingcommission'">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="ms-3 flex-grow-1">
+                                        <p class="stat-label mb-1">Admin Commission</p>
+                                        <p class="stat-value" id="admin_comm">₹ Loading...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Total Bets Card -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                        <div class="card stat-card shadow-sm" onclick="window.location.href='/super/betting'">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="stat-icon icon-purple">
+                                        <i class="fas fa-dice"></i>
+                                    </div>
+                                    <div class="ms-3 flex-grow-1">
+                                        <p class="stat-label mb-1">Total Bets</p>
+                                        <p class="stat-value" id="betting">Loading...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Betting Amount Card -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                        <div class="card stat-card shadow-sm" onclick="window.location.href='/super/betting'">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="stat-icon icon-indigo">
+                                        <i class="fas fa-coins"></i>
+                                    </div>
+                                    <div class="ms-3 flex-grow-1">
+                                        <p class="stat-label mb-1">Betting Amount</p>
+                                        <p class="stat-value" id="betamount">₹ Loading...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Winning Amount Card -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                        <div class="card stat-card shadow-sm" onclick="window.location.href='/super/betting'">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="stat-icon icon-rose">
+                                        <i class="fas fa-trophy"></i>
+                                    </div>
+                                    <div class="ms-3 flex-grow-1">
+                                        <p class="stat-label mb-1">Winning Amount</p>
+                                        <p class="stat-value" id="betwin">₹ Loading...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profit Card -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                        <div class="card stat-card profit-card shadow-sm"
+                            onclick="window.location.href='/super/betting'">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="ms-3 flex-grow-1">
+                                        <p class="stat-label mb-1">Bet Profit</p>
+                                        <p class="stat-value" id="profiles">₹ Loading...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Profit Card -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                        <div class="card stat-card profit-card shadow-sm"
+                            onclick="window.location.href='/super/betting'">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="ms-3 flex-grow-1">
+                                        <p class="stat-label mb-1">Bet Commission</p>
+                                        <p class="stat-value" id="betcommission">₹ Loading...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Profit Card -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                        <div class="card stat-card profit-card shadow-sm"
+                            onclick="window.location.href='/super/betting'">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="ms-3 flex-grow-1">
+                                        <p class="stat-label mb-1">Total Profit</p>
+                                        <p class="stat-value" id="totalprofit">₹ Loading...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Profit Card -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                        <div class="card stat-card profit-card shadow-sm"
+                            onclick="window.location.href='/super/result'">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="ms-3 flex-grow-1">
+                                        <p class="stat-label mb-1">Date</p>
+                                        <p class="stat-value" id="todaydate">Loading...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Profit Card -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                        <div class="card stat-card profit-card shadow-sm">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="ms-3 flex-grow-1">
+                                        <p class="stat-label mb-1">withdrawl Success</p>
+                                        <p class="stat-value" id="withdrawlS">Loading...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Profit Card -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                        <div class="card stat-card profit-card shadow-sm" >
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="ms-3 flex-grow-1">
+                                        <p class="stat-label mb-1">withdrawl pending</p>
+                                        <p class="stat-value" id="withdrawlp">Loading...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Profit Card -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                        <div class="card stat-card profit-card shadow-sm"
+                            onclick="window.location.href='/super/records'">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="ms-3 flex-grow-1">
+                                        <p class="stat-label mb-1">Deposit Add</p>
+                                        <p class="stat-value" id="DepositS">Loading...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Profit Card -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                        <div class="card stat-card profit-card shadow-sm"
+                            onclick="window.location.href='/super/records'">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="ms-3 flex-grow-1">
+                                        <p class="stat-label mb-1">Deposit Cutting</p>
+                                        <p class="stat-value" id="Depositp">Loading...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Profit Card -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                        <div class="card stat-card profit-card shadow-sm"  onclick="window.location.href='/super/records'">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="ms-3 flex-grow-1">
+                                        <p class="stat-label mb-1">Superradmin to admin</p>
+                                        <p class="stat-value" id="admin_total">Loading...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Profit Card -->
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+                        <div class="card stat-card profit-card shadow-sm" onclick="window.location.href='/super/records'">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <div class="ms-3 flex-grow-1">
+                                        <p class="stat-label mb-1">admin to Agent</p>
+                                        <p class="stat-value" id="agenttotal">Loading...</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+
+                <!-- Transaction History Table -->
+                <div class="card table-card">
+                    <div class="card-header bg-white border-bottom">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="mb-1 fw-semibold">Transaction History</h5>
+                                <p class="mb-0 text-muted small">Recent payment transactions</p>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-light icon-btn" title="Refresh">
+                                    <i class="fas fa-refresh"></i>
+                                </button>
+                                <button class="btn btn-light icon-btn" title="Download">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Payment Details</th>
+                                        <th class="text-end">User ID</th>
+                                        <th class="text-end">User Mobile</th>
+                                        <th class="text-end">Amount</th>
+                                        <th class="text-end">Sender</th>
+                                        <th class="text-end">Time</th>
+                                        <th class="text-end">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableDepsit">
+                                    <tr>
+                                        <td colspan="7" class="text-center py-5">
+                                            <i class="fas fa-spinner fa-spin loading-spinner fs-2 mb-2"></i>
+                                            <p class="text-muted mb-0">Loading transactions...</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="card table-card">
+                    <div class="card-header bg-white border-bottom">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="mb-1 fw-semibold">Withdrawls History</h5>
+                                <p class="mb-0 text-muted small">Recent payment transactions</p>
+                            </div>
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-light icon-btn" title="Refresh">
+                                    <i class="fas fa-refresh"></i>
+                                </button>
+                                <button class="btn btn-light icon-btn" title="Download">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Payment Details</th>
+                                        <th class="text-end">User ID</th>
+                                        <th class="text-end">User Mobile</th>
+                                        <th class="text-end">Amount</th>
+                                        <th class="text-end">Sender</th>
+                                        <th class="text-end">Time</th>
+                                        <th class="text-end">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableDepsit1">
+                                    <tr>
+                                        <td colspan="7" class="text-center py-5">
+                                            <i class="fas fa-spinner fa-spin loading-spinner fs-2 mb-2"></i>
+                                            <p class="text-muted mb-0">Loading transactions...</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Bootstrap 5 JS Bundle -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script>
+            // Enhanced date handling
+            const today = new Date();
+            const todayFormatted = today.toISOString().split('T')[0];
+            const tomorrow = new Date();
+            tomorrow.setDate(today.getDate() + 1);
+            const tomorrowFormatted = tomorrow.toISOString().split('T')[0];
+            document.getElementById("todaydate").innerHTML = todayFormatted;
+            // Set default dates
+            document.getElementById('startDate').value = todayFormatted;
+            document.getElementById('endDate').value = tomorrowFormatted;
+
+            // Loading state management
+            function setLoadingState(isLoading) {
+                const button = document.getElementById('filterButton');
+                if (isLoading) {
+                    button.disabled = true;
+                    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>Loading...</span>';
+                    button.classList.add('opacity-75');
+                } else {
+                    button.disabled = false;
+                    button.innerHTML = '<i class="fas fa-filter me-2"></i>Filter';
+                    button.classList.remove('opacity-75');
+                }
+            }
+
+            function onload() {
+                setLoadingState(true);
+
+                const requestData = {
+                    startDate: todayFormatted,
+                    endDate: tomorrowFormatted
+                };
+
+                const startDate1 = $('#startDate').val();
+                const endDate1 = $('#endDate').val();
+
+                if (startDate1 && endDate1) {
+                    requestData.startDate = startDate1;
+                    requestData.endDate = endDate1;
+                }
+
+                $.ajax({
+                    url: '/AdminDashbord',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(requestData),
+                    success: function (response) {
+                        if (response.Qstatus == 1) {
+                            // Animate number updates
+                            animateValue("betamount", 0, parseFloat(response.betamount) || 0);
+                            animateValue("betting", 0, parseInt(response.betting) || 0);
+                            animateValue("betwin", 0, parseFloat(response.betwin) || 0);
+                            animateValue("user", 0, parseInt(response.user) || 0);
+                            animateValue("agent_total_amount", 0, parseFloat(response.agent_total_amount) || 0);
+                            animateValue("user_total_amount", 0, parseFloat(response.user_total_amount) || 0);
+                            animateValue("pool", 0, parseFloat(response.pool) || 0);
+                            animateValue("admin_comm", 0, parseFloat(response.admin_comm) || 0);
+                            animateValue("take", 0, parseFloat(response.take) || 0);
+                            animateValue("betcommission", 0, parseFloat(response.commission) || 0);
+                            animateValue("agnet", 0, parseInt(response.agnet) || 0);
+
+                            animateValue("DepositS", 0, parseInt(response.add_recharge) || 0);
+                            animateValue("Depositp", 0, parseInt(response.cut_recharge) || 0);
+                            animateValue("admin_total", 0, parseInt(response.admin_total) || 0);
+                            animateValue("agenttotal", 0, parseInt(response.agenttotal) || 0);
+
+                            animateValue("withdrawlp", 0, parseInt(response.withdrawl_p) || 0);
+                            animateValue("withdrawlS", 0, parseInt(response.withdrawl_S) || 0);
+
+                            const profit = (parseFloat(response.betamount) || 0) - (parseFloat(response.betwin) || 0);
+                            animateValue("totalprofit", 0, (parseFloat(profit) - parseFloat(response.commission)) || 0);
+                            animateValue("profiles", 0, profit);
+                        } else {
+                            showError("Failed to load dashboard data");
+                        }
+                    },
+                    error: function () {
+                        showError("Network error occurred");
+                    },
+                    complete: function () {
+                        setLoadingState(false);
+                    }
+                });
+            }
+
+            // Number animation function
+            function animateValue(id, start, end) {
+                const element = document.getElementById(id);
+                const duration = 1000; // 1 second
+                const startTime = performance.now();
+
+                function updateValue(currentTime) {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+
+                    const current = start + (end - start) * progress;
+
+                    if (id === 'user' || id === 'betting' || id === "agnet") {
+                        element.textContent = Math.floor(current).toLocaleString();
+                    } else {
+                        element.textContent = '₹ ' + current.toLocaleString('en-IN', {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        });
+                    }
+
+                    if (progress < 1) {
+                        requestAnimationFrame(updateValue);
+                    }
+                }
+
+                requestAnimationFrame(updateValue);
+            }
+
+            // Enhanced transaction loading
+            function newDepost() {
+                $.ajax({
+                    url: '/newDepostiDashbord',
+                    type: 'POST',
+                    success: function (response) {
+                        if (response.Qstatus == 1) {
+                            const transactions = response.reData || [];
+                            const table = document.getElementById("tableDepsit");
+                            table.innerHTML = "";
+
+                            if (transactions.length === 0) {
+                                table.innerHTML = `
+                                <tr>
+                                    <td colspan="7" class="text-center py-5 text-muted">
+                                        <i class="fas fa-inbox fs-2 mb-2"></i>
+                                        <p class="mb-0">No transactions found</p>
+                                    </td>
+                                </tr>
+                            `;
+                                return;
+                            }
+
+                            transactions.forEach((element) => {
+                                const row = document.createElement("tr");
+                                row.className = "hover-row";
+
+                                const statusConfig = {
+                                    1: { color: 'warning', text: 'Pending', icon: 'fa-clock' },
+                                    2: { color: 'success', text: 'Success', icon: 'fa-check' },
+                                    default: { color: 'danger', text: 'Rejected', icon: 'fa-times' }
+                                };
+
+                                const status = statusConfig[element.status] || statusConfig.default;
+
+                                row.innerHTML = `
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="icon-circle bg-${status.color} bg-opacity-10 me-3">
+                                            <i class="fas ${status.icon} text-${status.color}"></i>
+                                        </div>
+                                        <div>
+                                            <div class="fw-medium text-dark">Payment #${element.id || "00"}</div>
+                                            <div class="small text-muted">Transaction ID</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-end">${element.userid || "N/A"}</td>
+                                <td class="text-end">${element.mobile || "N/A"}</td>
+                                <td class="text-end fw-bold">₹${parseFloat(element.amount || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
+                                <td class="text-end">${element.admin_id || "N/A"}</td>
+                                <td class="text-end">${element.time || "N/A"}</td>
+                                <td class="text-end">
+                                    <span class="badge bg-${status.color} bg-opacity-10 text-${status.color} badge-status">
+                                        ${status.text}
+                                    </span>
+                                </td>
+                            `;
+
+                                table.appendChild(row);
+                            });
+                        }
+                    },
+                    error: function () {
+                        const table = document.getElementById("tableDepsit");
+                        table.innerHTML = `
+                        <tr>
+                            <td colspan="7" class="text-center py-5 text-danger">
+                                <i class="fas fa-exclamation-triangle fs-2 mb-2"></i>
+                                <p class="mb-0">Error loading transactions</p>
+                            </td>
+                        </tr>
+                    `;
+                    }
+                });
+            }
+            // Enhanced transaction loading
+            function newDepost1() {
+                $.ajax({
+                    url: '/newWithdrwalsDashbord',
+                    type: 'POST',
+                    success: function (response) {
+                        if (response.Qstatus == 1) {
+                            const transactions = response.reData || [];
+                            const table = document.getElementById("tableDepsit1");
+                            table.innerHTML = "";
+
+                            if (transactions.length === 0) {
+                                table.innerHTML = `
+                                <tr>
+                                    <td colspan="7" class="text-center py-5 text-muted">
+                                        <i class="fas fa-inbox fs-2 mb-2"></i>
+                                        <p class="mb-0">No transactions found</p>
+                                    </td>
+                                </tr>
+                            `;
+                                return;
+                            }
+
+                            transactions.forEach((element) => {
+                                const row = document.createElement("tr");
+                                row.className = "hover-row";
+
+                                const statusConfig = {
+                                    1: { color: 'warning', text: 'Pending', icon: 'fa-clock' },
+                                    2: { color: 'success', text: 'Success', icon: 'fa-check' },
+                                    3: { color: 'dager', text: 'Success', icon: 'fa-check' },
+                                    default: { color: 'danger', text: 'Rejected', icon: 'fa-times' }
+                                };
+
+                                const status = statusConfig[element.status] || statusConfig.default;
+
+                                row.innerHTML = `
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="icon-circle bg-${status.color} bg-opacity-10 me-3">
+                                            <i class="fas ${status.icon} text-${status.color}"></i>
+                                        </div>
+                                        <div>
+                                            <div class="fw-medium text-dark">Payment #${element.id || "00"}</div>
+                                            <div class="small text-muted">Transaction ID</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="text-end">${element.userid || "N/A"}</td>
+                                <td class="text-end">${element.mobile || "N/A"}</td>
+                                <td class="text-end fw-bold">₹${parseFloat(element.amount || 0).toLocaleString('en-IN', { minimumFractionDigits: 2 })}</td>
+                                <td class="text-end">${element.admin_id || "N/A"}</td>
+                                <td class="text-end">${element.time || "N/A"}</td>
+                                <td class="text-end">
+                                    <span class="badge bg-${status.color} bg-opacity-10 text-${status.color} badge-status">
+                                        ${status.text}
+                                    </span>
+                                </td>
+                            `;
+
+                                table.appendChild(row);
+                            });
+                        }
+                    },
+                    error: function () {
+                        const table = document.getElementById("tableDepsit");
+                        table.innerHTML = `
+                        <tr>
+                            <td colspan="7" class="text-center py-5 text-danger">
+                                <i class="fas fa-exclamation-triangle fs-2 mb-2"></i>
+                                <p class="mb-0">Error loading transactions</p>
+                            </td>
+                        </tr>
+                    `;
+                    }
+                });
+            }
+
+            // Error notification function
+            function showError(message) {
+                const toast = document.createElement('div');
+                toast.className = 'position-fixed top-0 end-0 m-3 bg-danger text-white px-4 py-3 rounded shadow-lg';
+                toast.style.zIndex = '9999';
+                toast.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+
+                document.body.appendChild(toast);
+
+                setTimeout(() => toast.remove(), 3000);
+            }
+
+            // DataSave function for filter button
+            function DataSave() {
+                onload();
+            }
+
+            // Initialize dashboard
+            document.addEventListener('DOMContentLoaded', function () {
+                onload();
+                newDepost();
+                newDepost1();
+            });
+
+            // Auto-refresh every 30 seconds
+            setInterval(() => {
+                onload();
+                newDepost();
+            }, 30000);
+        </script>
+
+        <style>
+            .hover-row {
+                transition: background-color 0.2s ease;
+            }
+
+            .hover-row:hover {
+                background-color: #f8f9fa;
+            }
+
+            .icon-circle {
+                width: 32px;
+                height: 32px;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .opacity-75 {
+                opacity: 0.75;
+            }
+        </style>
+
+        <%- include('layout/footer') %>

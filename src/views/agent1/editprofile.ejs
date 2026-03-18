@@ -1,0 +1,252 @@
+<%- include('layout/header') %>
+ <div class="m-5">
+  <!-- Tabs -->
+  <div id="tabs" role="tablist"
+       class="flex flex-wrap gap-1 border-b border-gray-300 dark:border-gray-700">
+    <button role="tab" aria-selected="true" data-target="#panel-dashboard"
+            class="tab-btn px-4 py-2 text-sm font-medium border-b-2 border-blue-600 text-blue-600 dark:text-blue-400">
+      Dashboard
+    </button>
+    <button role="tab" aria-selected="false" data-target="#panel-deposit"
+            class="tab-btn px-4 py-2 text-sm font-medium border-b-2 border-transparent hover:text-blue-600 hover:border-blue-500 dark:hover:text-blue-400">
+      Deposit History
+    </button>
+    <button role="tab" aria-selected="false" data-target="#panel-betting"
+            class="tab-btn px-4 py-2 text-sm font-medium border-b-2 border-transparent hover:text-blue-600 hover:border-blue-500 dark:hover:text-blue-400">
+      Betting
+    </button>
+    <button role="tab" aria-selected="false" data-target="#panel-profile"
+            class="tab-btn px-4 py-2 text-sm font-medium border-b-2 border-transparent hover:text-blue-600 hover:border-blue-500 dark:hover:text-blue-400">
+      Update Profile
+    </button>
+  </div>
+
+  <!-- Panels -->
+  <div class="mt-4">
+    <!-- Dashboard -->
+    <section id="panel-dashboard" role="tabpanel" class="tab-panel">
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="p-4 rounded-xl border bg-white  card">
+          <p class="text-sm text-gray-500">Total Deposits</p>
+          <p class="text-2xl font-semibold mt-1">₹ 1,25,000</p>
+        </div>
+        <div class="p-4 rounded-xl border bg-white  card">
+          <p class="text-sm text-gray-500 dark:text-gray-400">Active Bets</p>
+          <p class="text-2xl font-semibold mt-1">12</p>
+        </div>
+        <div class="p-4 rounded-xl border bg-white  card">
+          <p class="text-sm text-gray-500 dark:text-gray-400">Profit (30d)</p>
+          <p class="text-2xl font-semibold mt-1 text-green-600">+₹ 9,430</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Deposit History -->
+    <section id="panel-deposit" role="tabpanel" class="tab-panel hidden">
+      <div class="overflow-x-auto rounded-xl border border-gray-200 card bg-white ">
+        <table class="min-w-full">
+          <thead class="bg-gray-100 dark:bg-gray-700">
+            <tr class="text-left text-sm">
+              <th class="p-3">Date</th>
+              <th class="p-3">Amount</th>
+              <th class="p-3">Method</th>
+              <th class="p-3">Status</th>
+            </tr>
+          </thead>
+          <tbody class="text-sm">
+            <tr class="border-t border-gray-100 dark:border-gray-700">
+              <td class="p-3">2025-08-10</td>
+              <td class="p-3">₹ 5,000</td>
+              <td class="p-3">UPI</td>
+              <td class="p-3"><span class="px-2 py-0.5 rounded bg-green-100 text-green-700 dark:bg-green-700/30 dark:text-green-300">Success</span></td>
+            </tr>
+            <tr class="border-t border-gray-100 dark:border-gray-700">
+              <td class="p-3">2025-08-05</td>
+              <td class="p-3">₹ 2,500</td>
+              <td class="p-3">Bank</td>
+              <td class="p-3"><span class="px-2 py-0.5 rounded bg-yellow-100 text-yellow-700 dark:bg-yellow-700/30 dark:text-yellow-300">Pending</span></td>
+            </tr>
+            <tr class="border-t border-gray-100 dark:border-gray-700">
+              <td class="p-3">2025-07-28</td>
+              <td class="p-3">₹ 10,000</td>
+              <td class="p-3">Card</td>
+              <td class="p-3"><span class="px-2 py-0.5 rounded bg-red-100 text-red-700 dark:bg-red-700/30 dark:text-red-300">Failed</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Betting -->
+    <section id="panel-betting" role="tabpanel" class="tab-panel hidden">
+      <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-700 bg-white card">
+        <table class="min-w-full">
+          <thead class="bg-gray-100 dark:bg-gray-700">
+            <tr class="text-left text-sm">
+              <th class="p-3">Event</th>
+              <th class="p-3">Stake</th>
+              <th class="p-3">Odds</th>
+              <th class="p-3">Result</th>
+              <th class="p-3">P/L</th>
+            </tr>
+          </thead>
+          <tbody class="text-sm">
+            <tr class="border-t border-gray-100 dark:border-gray-700">
+              <td class="p-3">Match A vs B</td>
+              <td class="p-3">₹ 1,000</td>
+              <td class="p-3">2.5</td>
+              <td class="p-3">Win</td>
+              <td class="p-3 text-green-600">+₹ 1,500</td>
+            </tr>
+            <tr class="border-t border-gray-100 dark:border-gray-700">
+              <td class="p-3">Team C vs D</td>
+              <td class="p-3">₹ 800</td>
+              <td class="p-3">1.9</td>
+              <td class="p-3">Loss</td>
+              <td class="p-3 text-red-600">-₹ 800</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Update Profile -->
+    <section id="panel-profile" role="tabpanel" class="tab-panel hidden">
+      <div class="max-w-xl  rounded-2xl border border-gray-200 dark:border-gray-700 bg-white card p-6">
+        <h3 class="text-lg font-semibold mb-4">Update Profile</h3>
+        <form class="space-y-4">
+          <div>
+            <label class="block text-sm font-medium mb-1">Name</label>
+            <input type="text" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200 dark:focus:ring-blue-500 dark:text-white" value="John Doe">
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Mobile</label>
+            <input type="tel" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200 dark:focus:ring-blue-500 dark:text-white" value="+91 9876543210">
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-sm font-medium mb-1">Current Password</label>
+              <input type="password" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200 dark:focus:ring-blue-500 dark:text-white" placeholder="••••••••">
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1">New Password</label>
+              <input type="password" class="w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200 dark:focus:ring-blue-500 dark:text-white" placeholder="New password">
+            </div>
+          </div>
+          <button class="w-full sm:w-auto px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow">
+            Save Changes
+          </button>
+        </form>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script>
+  // Simple JS to switch tabs
+  (function () {
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const panels = document.querySelectorAll('.tab-panel');
+
+    function activate(btn) {
+      // reset buttons
+      tabButtons.forEach(b => {
+        b.setAttribute('aria-selected', 'false');
+        b.classList.remove('text-blue-600', 'dark:text-blue-400', 'border-blue-600');
+        b.classList.add('border-transparent');
+      });
+      // hide panels
+      panels.forEach(p => p.classList.add('hidden'));
+
+      // activate target
+      const target = document.querySelector(btn.dataset.target);
+      btn.setAttribute('aria-selected', 'true');
+      btn.classList.add('text-blue-600', 'dark:text-blue-400', 'border-blue-600');
+      btn.classList.remove('border-transparent');
+      if (target) target.classList.remove('hidden');
+    }
+
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => activate(btn));
+    });
+  })();
+</script>
+
+  <%- include('layout/footer') %>
+
+    <!-- Block User Modal (JS version) -->
+    <div id="blockUserModal"
+      class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center">
+      <div class="w-full max-w-md rounded-2xl bg-white text-gray-900 shadow-xl dark:bg-gray-800 dark:text-gray-100">
+        <!-- Header -->
+        <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-gray-700">
+          <h3 class="text-lg font-semibold">Block User</h3>
+          <button onclick="closeBlockModal()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+            ✕
+          </button>
+        </div>
+        <!-- Body -->
+        <form id="blockUserForm" class="px-5 py-4 space-y-4">
+          <div class="text-sm">
+            <p class="font-medium">User</p>
+            <p class="text-gray-600 dark:text-gray-300">John Doe · ID: 12345 (Active)</p>
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Duration</label>
+            <select name="duration"
+              class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700">
+              <option value="24h">Active</option>
+              <option value="permanent">Block</option>
+            </select>
+          </div>
+        </form>
+        <!-- Footer -->
+        <div class="flex items-center justify-end gap-2 px-5 py-4 border-t border-gray-200 dark:border-gray-700">
+          <button onclick="closeBlockModal()"
+            class="px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700">
+            Cancel
+          </button>
+          <button type="button" onclick="blockUserAction()"
+            class="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700">
+            Block
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div id="successToast"
+      class="fixed top-5 right-5 z-50 hidden items-center gap-3 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg shadow-lg animate-slide-in">
+      <i class="fa-solid fa-circle-check text-green-500 text-xl"></i>
+      <span class="font-medium">this demo panel !</span>
+      <button onclick="hideSuccessToast()" class="ml-2 text-green-700 hover:text-green-900 font-bold">
+        &times;
+      </button>
+    </div>
+
+    <!-- JS -->
+    <script>
+      function openBlockModal() {
+        document.getElementById('blockUserModal').classList.remove('hidden');
+      }
+      function closeBlockModal() {
+        document.getElementById('blockUserModal').classList.add('hidden');
+      }
+      function blockUserAction() {
+        closeBlockModal();
+        showSuccessToast();
+      }
+      function showSuccessToast() {
+        const toast = document.getElementById('successToast');
+        toast.classList.remove('hidden');
+        setTimeout(() => {
+          hideSuccessToast();
+        }, 3000);
+      }
+      function hideSuccessToast() {
+        document.getElementById('successToast').classList.add('hidden');
+      }
+    </script>
+
+    <!-- Example Trigger -->
+    <!-- <button onclick="openBlockModal()" class="bg-blue-500 text-white px-4 py-2 rounded-lg">Open Block Modal</button> -->

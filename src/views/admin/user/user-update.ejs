@@ -1,0 +1,165 @@
+<%- include('../layout/header') %>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <div class="pt-4 m-3"></div>
+    <div class="pt-4 m-3"></div>
+
+    <div class="row m-3 justify-content-around">
+        <!-- Left Section: Profile Card -->
+        <div class="col-md-5">
+            <div class="card card-profile">
+                <!-- Card Header -->
+                <div class="card-header" style="background-image: url('assets/img/blogpost.jpg')">
+                    <div class="profile-picture">
+                        <div class="avatar avatar-xl">
+                            <img src="/assets/img/profile.jpg" alt="Profile Picture"
+                                class="avatar-img rounded-circle" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="user-profile text-center">
+                        <div class="d-flex justify-content-between">
+                            <p>Name : </p>
+                            <p>
+                                <%= user.username %>
+                            </p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <p>Mobile : </p>
+                            <p>
+                                <%= user.mobile %>
+                            </p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <p>Wallet : </p>
+                            <p>₹<%= user.wallet || 0 %>
+                            </p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <p>Win Wallet : </p>
+                            <p>₹<%= user.winWallet || 0 %>
+                            </p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <p>Total Win : </p>
+                            <p>₹<%= user.winAmount || 0 %>
+                            </p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <p>Total Lose : </p>
+                            <p>₹<%= user.LoseAmount || 0 %>
+                            </p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <p>Join Date : </p>
+                            <p>
+                                <%= user.time %>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <!-- Right Section: Stats and Date Filter -->
+        <div class="col-md-7">
+
+            <div class="card card-stats card-round shadow-sm" style="overflow: hidden;">
+                <!-- Scrollable Header Container -->
+                <div class="d-flex align-items-center"
+                    style="width: 100%; overflow-x: auto; white-space: nowrap;margin-left: 10px;margin-right: 10px;">
+                    <p class="cursor m-2" onclick="window.location.href='/super/user/<%= user.id %>'">Dashboard</p>
+                     <p class="cursor m-2" onclick="window.location.href='/super/user-passbook/<%= user.id %>'">commission</p>
+                    <p class="cursor m-2" onclick="window.location.href='/super/user-deposit/<%= user.id %>'">Admin Deposit
+                    </p>
+                     <p class="cursor m-2" onclick="window.location.href='/super/user-with/<%= user.id %>'">Withdrawals</p>
+                    <p class="cursor m-2" onclick="window.location.href='/super/user-trade/<%= user.id %>'">Trade</p>
+                    <p class="cursor m-2" onclick="window.location.href='/super/user-commit/<%= user.id %>'">Community
+                    </p>
+                    <p class="cursor m-2 text-primary"
+                        onclick="window.location.href='/super/user-update/<%= user.id %>'">Update user data</p>
+                    <!-- <p class="cursor m-2" onclick="window.location.href='/super/user-bank/<%= user.id %>'">Update Bank </p> -->
+                </div>
+            </div>
+
+            <!-- Stats Row -->
+            <div class="card">
+                <form>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Name</label>
+                        <input type="text" class="form-control" id="username" value="<%= user.username %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Winner</label>
+                        <input type="number" id="winner" class="form-control" value="<%= user.winner %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">mobile</label>
+                        <input type="number" id="usermobile" class="form-control" value="<%= user.mobile %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email</label>
+                        <input type="email" id="email" class="form-control" value="<%= user.email %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">commission</label>
+                        <input type="number" id="commision" class="form-control" value="<%= user.commision %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Status</label>
+                        <select class="form-control" id="userblock">
+                            <option value="<%= user.block %>">
+                                <%= (user.block==0) ? "Active" : "Block" %>
+                            </option>
+                            <option value="0">Active</option>
+                            <option value="1">Block</option>
+                        </select>
+                    </div>
+                      <div class="form-group">
+                        <label for="exampleInputEmail1">Set New Password</label>
+                        <input type="password" id="password__" class="form-control" value="">
+                    </div>
+                    <button type="button" onclick="DataSave()" class="btn btn-primary m-3">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- AJAX Script for Profile Update -->
+    <script>
+        const userid = '<%= user.id %>';
+        console.log(userid, "userod");
+
+        function DataSave() {
+            let name = document.getElementById("username").value;
+            let mobile = document.getElementById("usermobile").value;
+            let block = document.getElementById("userblock").value;
+            let commision = document.getElementById("commision").value;
+            let email = document.getElementById("email").value;
+            let password__ = document.getElementById("password__").value;
+            let winner = document.getElementById("winner").value;
+            const requestData = { userid, name, mobile, block, commision, email, password : password__ , winner};
+            console.log(requestData, "userid");
+
+            $.ajax({
+                url: '/userDataUpdate',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(requestData),
+                success: function (response) {
+                    if (response.Qstatus == 1) {
+                        swal(response.message, { buttons: { confirm: { className: "btn btn-success" } } });
+                    } else {
+                        swal(response.message, { buttons: { confirm: { className: "btn btn-danger" } } });
+                    }
+                },
+            });
+        }
+    </script>
+
+    <%- include('../layout/footer') %>

@@ -1,0 +1,370 @@
+<%- include('../layout/header') %>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<div class="pt-4 m-3"></div>
+<div class="pt-4 m-3"></div>
+
+<div class="row m-3 justify-content-around">
+    <!-- Left Section: Profile Card -->
+    <div class="col-md-5">
+        <div class="card card-profile">
+            <!-- Card Header -->
+            <div class="card-header" style="background-image: url('assets/img/blogpost.jpg')">
+                <div class="profile-picture">
+                    <div class="avatar avatar-xl">
+                        <img src="/assets/img/profile.jpg" alt="Profile Picture" class="avatar-img rounded-circle" />
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card Body -->
+            <div class="card-body">
+                <div class="user-profile text-center">
+                    <div class="d-flex justify-content-between"><p>Name : </p><p><%= user.username %></p></div>
+                    <div class="d-flex justify-content-between"><p>Mobile : </p><p><%= user.mobile %></p></div>
+                    <div class="d-flex justify-content-between"><p>Wallet : </p><p>₹<%= user.wallet || 0 %></p></div>
+                    <div class="d-flex justify-content-between"><p>Win Wallet : </p><p>₹<%= user.winWallet || 0 %></p></div>
+                    <div class="d-flex justify-content-between"><p>Total Win : </p><p>₹<%= user.winAmount || 0 %></p></div>
+                    <div class="d-flex justify-content-between"><p>Total Lose : </p><p>₹<%= user.LoseAmount || 0 %></p></div>
+                    <div class="d-flex justify-content-between"><p>Join Date : </p><p><%= user.time %></p></div>
+                </div>
+            </div>
+
+            
+        </div>
+    </div>
+
+    <!-- Right Section: Stats and Date Filter -->
+    <div class="col-md-7">
+        <!-- Date Filter Card -->
+         <!-- Date Filters -->
+  <div class="card-body">
+        <div class="card card-stats card-round shadow-sm" style="overflow: hidden;">
+            <!-- Scrollable Header Container -->
+            <div class="d-flex align-items-center" style="width: 100%; overflow-x: auto; white-space: nowrap;margin-left: 10px;margin-right: 10px;">
+                <p class="cursor m-2" onclick="window.location.href='/super/user/<%= user.id %>'">Dashboard</p>
+                <p class="cursor m-2" onclick="window.location.href='/super/user-passbook/<%= user.id %>'">commission</p>
+                <p class="cursor m-2" onclick="window.location.href='/super/user-deposit/<%= user.id %>'">Admin Deposit</p>
+                  <p class="cursor m-2" onclick="window.location.href='/super/user-with/<%= user.id %>'">Withdrawals</p>
+                <p class="cursor m-2 text-primary" onclick="window.location.href='/super/user-trade/<%= user.id %>'">Trade</p>
+                <p class="cursor m-2" onclick="window.location.href='/super/user-commit/<%= user.id %>'">Community</p>
+                <p class="cursor m-2" onclick="window.location.href='/super/user-update/<%= user.id %>'">Update user data</p>
+                 <!-- <p class="cursor m-2" onclick="window.location.href='/super/user-bank/<%= user.id %>'">Update Bank</p> -->
+            </div>
+        </div>
+        <!-- Stats Row -->
+        <div class="row">
+            <!-- Revenue Card -->
+            <div class="col-sm-6 mb-3">
+                <div class="card card-stats card-round shadow-sm">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="icon-big text-center text-success">
+                                    <i class="fas fa-wallet fa-2x"></i>
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div class="numbers">
+                                    <p class="card-category mb-1">Profit</p>
+                                    <h4 class="card-title">₹<span id="profile">londing...</span></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profit Card -->
+            <div class="col-sm-6 mb-3">
+                <div class="card card-stats card-round shadow-sm">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="icon-big text-center text-info">
+                                    <i class="fas fa-chart-line fa-2x"></i>
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div class="numbers">
+                                    <p class="card-category mb-1">Betamount</p>
+                                    <h4 class="card-title">₹<span id="Betamount">londing...</span></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Profit Card -->
+            <div class="col-sm-6 mb-3">
+                <div class="card card-stats card-round shadow-sm">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-4">
+                                <div class="icon-big text-center text-info">
+                                    <i class="fas fa-chart-line fa-2x"></i>
+                                </div>
+                            </div>
+                            <div class="col-8">
+                                <div class="numbers">
+                                    <p class="card-category mb-1">Wianmount </p>
+                                    <h4 class="card-title">₹<span id="Winamount">londing...</span></h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <!-- Card Header -->
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h4 class="card-title">Basic</h4>
+          <div class="input-group" style="width: auto;">
+            <input type="search" id="form1" class="form-control" placeholder="Search" aria-label="Search" />
+            <button type="button" class="btn btn-primary">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </div>
+  
+         <!-- Date Filters -->
+  <div class="card-body">
+    <div class="row mb-3 align-items-end">
+      <div class="col-md-4">
+        <label for="startDate" class="form-label">Start Date</label>
+        <input type="date" id="startDate" class="form-control" />
+      </div>
+      <div class="col-md-4">
+        <label for="endDate" class="form-label">End Date</label>
+        <input type="date" id="endDate" class="form-control" />
+      </div>
+      <div class="col-md-4">
+        <button type="button" id="filterButton" class="btn btn-success w-100">
+          <i class="fas fa-filter"></i> Filter
+        </button>
+      </div>
+    </div>
+  
+          <!-- Table -->
+          <div class="table-responsive">
+            <table  class="display table table-striped table-hover">
+              <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Active</th>
+                    <th>Userid</th>
+                    <th>Adminid</th>
+                    <th>Game Name.</th>
+                    <th>Bet Amount</th>
+                    <th>Win Amount</th>
+                    <th>User Wallet</th>
+                    <th>Status</th>
+                    <th>date</th>
+                </tr>
+              </thead>
+              <tfoot>
+                <tr>
+                  <th>#</th>
+                  <th>Active</th>
+                    <th>Userid</th>
+                    <th>Adminid</th>
+                  <th>Game Name.</th>
+                  <th>Bet Amount</th>
+                  <th>Win Amount</th>
+                  <th>User Wallet</th>
+                  <th>Status</th>
+                  <th>date</th>
+                </tr>
+              </tfoot>
+              <tbody id="tableprint">
+                                   
+              </tbody>
+            </table>
+          </div>
+  
+          <!-- Pagination -->
+          <div class="row align-items-center">
+            <div class="col-md-5 mb-3 mb-md-0">
+              <div class="dataTables_info">
+                Showing Pages <span id="totalenter"></span> entries <span id="totalRows"> page</span> 
+              </div>
+            </div>
+            <div class="col-md-7">
+              <nav aria-label="Table Pagination">
+                <ul class="pagination justify-content-end">
+                  <li class="page-item ">
+                    <a class="page-link" id="perviousP">Previous</a>
+                  </li>
+                  <li class="page-item active">
+                    <a class="page-link"  id="totalpageshow">2</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link"  id="nextP">Next</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<!-- AJAX Script for Profile Update -->
+<script>
+    const userid = '<%= user.id %>';
+    let page = 1;
+    let totalpage = 1;
+
+      function fetchData() {
+        const requestData = {
+          item: $('#form1').val().trim(),
+          page : page,
+          status : 1,
+          tableName : 'betting',
+          userid : userid,
+        };
+        const startDate = $('#startDate').val();
+        const endDate = $('#endDate').val();
+        if (startDate && endDate) {
+          requestData.startdate = startDate;
+          requestData.enddate = endDate;
+        }
+
+        // Make AJAX request to fetch data
+        $.ajax({
+          url: '/Userbetting', // Your Node.js API endpoint
+          type: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify(requestData),
+          success: function (response) {
+            const user =response; // Corrected this line from 'respona' to 'response'
+            var tbody = document.getElementById("tableprint");
+            tbody.innerHTML = "";
+            var ve = user.reData;
+            totalpage =  user.pagination.totalPages;
+            document.getElementById("totalpageshow").innerHTML = user.pagination.currentPage; 
+            document.getElementById("totalenter").innerHTML = user.pagination.totalPages; 
+            document.getElementById("totalRows").innerHTML = user.pagination.totalRows; 
+            document.getElementById("Winamount").innerHTML = user.winamount; 
+            document.getElementById("Betamount").innerHTML = user.betamount; 
+            document.getElementById("profile").innerHTML = user.winamount- user.betamount; 
+            ve.forEach(element => {
+              var row = document.createElement("tr");
+              var td = 
+                  "<th scope='row'>" + element.id + " </th>"
+                  + "<th>"
+                  + "<i class='fa fa-trash text-danger delete-icon' type='button' id='alert_demo_7' style='font-size:20px;margin-right:5px' data-da='" + element.id + "'></i>"
+                  + "</th>"
+                  + "<td>" + element.userid + "</td>"
+                  + "<td>" + element.admin_id + "</td>"
+                  + "<td>" + element.gamename + "</td>"
+                  + "<td>" + element.betamount + "</td>"
+                  + "<td>" + element.winamount + "</td>"
+                  + "<td>" + element.userwallet + "</td>"
+                  + "<td><p class='text-"+(element.betamount > element.winamount ? 'danger' : 'success') + "'>" + (element.betamount > element.winamount ? 'Lose' : 'Win') + "<p/></td>"
+                  + "<td>" + element.time + "</td>"
+              ;
+              row.innerHTML = td;
+
+              tbody.appendChild(row);
+              // pagenumber.innerHTML = page;
+            });
+          },
+
+          error: function (xhr, status, error) {
+            console.error('Failed to fetch data:', error);
+          },
+        });
+      }
+
+      fetchData();
+       // Reload data on search input change
+       $('#form1').on('keyup', function () {
+        fetchData();
+      });
+  
+      // Reload data on date filter button click
+      $('#filterButton').on('click', function () {
+        fetchData();
+      });
+      $('#perviousP').on('click', function () {
+        if(page > 1){
+          page--;
+          fetchData();
+        }
+      });
+      $('#nextP').on('click', function () {
+
+        if(page < totalpage){
+          page++;
+          fetchData();
+        }
+      });
+</script>
+<script>
+    $(document).on('click', '.delete-icon', function (e) {
+    const recordsIdd = $(this).data('da');
+    const requestData1 = {
+      tableName : 'betting',
+      tableidd: recordsIdd,
+    };
+    swal({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        type: "warning",
+        buttons: {
+            confirm: {
+                text: "Yes, delete it!",
+                className: "btn btn-success",
+            },
+            cancel: {
+                visible: true,
+                className: "btn btn-danger",
+            },
+        },
+    }).then((Delete) => {
+        if (Delete) {
+          $.ajax({
+            url: '/UserRecordsD', // Your Node.js API endpoint
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(requestData1),
+            success: function (response) {
+              const user =response;
+              if(response.status == 1){
+                swal({
+                  title: "Deleted!",
+                  text: response.message,
+                  type: "success",
+                  buttons: {
+                    confirm: {
+                      className: "btn btn-success",
+                    },
+                  },
+                  });
+                  fetchData();
+              }else{
+                swal({
+                  title: "Sever Error!",
+                  text: response.message,
+                  type: "info",
+                });
+              }
+            }
+          });
+            
+        } else {
+            swal.close();
+        }
+    });
+});
+
+  </script>
+
+<%- include('../layout/footer') %>

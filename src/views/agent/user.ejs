@@ -1,0 +1,455 @@
+<%- include('layout/header') %>
+
+
+  <div class=" p-4 ">
+    <div class="card p-6 rounded-xl shadow flex-1 flex flex-col">
+      <div class="flex justify-between m-4">
+        <h3 class="text-lg font-bold mb-4">Total User</h3>
+        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+          onclick="openAddDepositModal()">Add</button>
+        <!-- <button class="bg-green -500 text-white px-4 py-2 rounded-lg hover:bg-green-600" >Add</button> -->
+      </div>
+
+      <!-- Filters -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-2 mb-4">
+        <input type="text" placeholder="Search by user or action" id="search_bar"
+          class="border rounded-lg px-3 py-2 w-full focus:outline-none focus:ring focus:ring-blue-300">
+
+        <input type="date" style="color: #000000 !important;" id="startdate"
+          class="border rounded-lg px-3 py-2 w-full focus:outline-none focus:ring focus:ring-blue-300">
+
+        <input type="date" style="color: #000000 !important;" id="enddate"
+          class="border rounded-lg px-3 py-2 w-full focus:outline-none focus:ring focus:ring-blue-300">
+
+        <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600" onclick="fillter()">Filter</button>
+      </div>
+
+      <!-- Table -->
+      <div class="overflow-x-auto flex-1">
+        <table class="min-w-full border border-gray-200">
+          <thead class="bg-gray-200 sticky top-0">
+            <tr style="color:#000000">
+              <th class="p-3 border">#</th>
+              <th class="p-3 border">Action</th>
+              <th class="p-3 border">Name</th>
+              <th class="p-3 border">Mobile</th>
+              <th class="p-3 border">wallet</th>
+              <th class="p-3 border">Win wallet</th>
+              <th class="p-3 border">Otp</th>
+              <th class="p-3 border">type</th>
+              <th class="p-3 border">Block</th>
+              <th class="p-3 border">Join date</th>
+            </tr>
+          </thead>
+          <tbody id="showdata">
+            <!-- Rows will be inserted here -->
+          </tbody>
+          
+        </table>
+      </div>
+      <div class="flex justify-between mt-4">
+        <div class="mt-4 space-x-2">
+          <p class="">Showing <span id="cureent_pages">1</span> to 10 of  <span id="Total_enter">1</span></p>
+        </div>
+        <div class=" mt-4 space-x-2">
+          <button class="px-3 py-1 rounded-lg border bg-white hover:bg-gray-100" style="color: #000000 !important;" onclick="backpage()">
+            < </button>
+              <button class="px-3 py-1 rounded-lg border bg-white hover:bg-gray-100"
+                style="color: #000000 !important;" id="cureent_pages1" >1</button>
+              <button class="px-3 py-1 rounded-lg border bg-white hover:bg-gray-100"
+                style="color: #000000 !important;" onclick="nextpage()">></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <%- include('layout/footer') %>
+
+    <!-- Block User Modal (JS version) -->
+    <div id="blockUserModal"
+      class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center">
+      <div class="w-full max-w-md rounded-2xl bg-white text-gray-900 shadow-xl dark:bg-gray-800 dark:text-gray-100">
+        <!-- Header -->
+        <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-gray-700">
+          <h3 class="text-lg font-semibold">Block User</h3>
+          <button onclick="closeBlockModal()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+            ✕
+          </button>
+        </div>
+        <!-- Body -->
+        <form id="blockUserForm" class="px-5 py-4 space-y-4">
+          <div class="text-sm">
+            <p class="font-medium">User</p>
+            <p class="text-gray-600 dark:text-gray-300" id="show_user_D">John Doe · ID: 12345 (Active)</p>
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Duration</label>
+            <input type="hidden" id="useridd" value="">
+            <select name="duration" id="blocktype"
+              class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700">
+              <option value="0">Active</option>
+              <option value="1">Block</option>
+            </select>
+          </div>
+        </form>
+        <!-- Footer -->
+        <div class="flex items-center justify-end gap-2 px-5 py-4 border-t border-gray-200 dark:border-gray-700">
+          <button onclick="closeBlockModal()"
+            class="px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700">
+            Cancel
+          </button>
+          <button type="button" onclick="blockuser()"
+            class="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700">
+            Block
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div id="successToast" 
+      class="fixed top-5 right-5 z-50 hidden items-center gap-3 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg shadow-lg animate-slide-in">
+      <i class="fa-solid fa-circle-check text-green-500 text-xl"></i>
+      <span class="font-medium" id="showerror">this demo panel !</span>
+      <button onclick="hideSuccessToast()" class="ml-2 text-green-700 hover:text-green-900 font-bold">
+        &times;
+      </button>
+    </div>
+
+
+    <!-- Block User Modal (JS version) -->
+    <div id="blockUserModal1"
+      class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center">
+      <div class="w-full max-w-md rounded-2xl bg-white text-gray-900 shadow-xl dark:bg-gray-800 dark:text-gray-100">
+        <!-- Header -->
+        <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-gray-700">
+          <h3 class="text-lg font-semibold">Add User</h3>
+          <button onclick="closedepositModal()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+            ✕
+          </button>
+        </div>
+        <!-- Body -->
+        <form id="blockUserForm" class="px-5 py-4 space-y-4">
+
+          <div>
+            <label class="block text-sm font-medium mb-1">User Name </label>
+            <input type="text" name="amount" id="user_name" placeholder="Enter user mobile" class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 
+           focus:outline-none focus:ring focus:ring-blue-200
+           dark:border-gray-600 dark:bg-gray-700 dark:text-white" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Mobile</label>
+            <input type="number" name="amount" id="user_mobile" placeholder="Enter Mobile" class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 
+           focus:outline-none focus:ring focus:ring-blue-200
+           dark:border-gray-600 dark:bg-gray-700 dark:text-white" />
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Password</label>
+            <input type="password" name="amount" id="user_password" placeholder="Enter Passowrd" class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 
+           focus:outline-none focus:ring focus:ring-blue-200
+           dark:border-gray-600 dark:bg-gray-700 dark:text-white" />
+          </div>
+          <!-- <div>
+            <label class="block text-sm font-medium mb-1">Type</label>
+            <select name="duration" id="user_type"
+              class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 dark:border-gray-600 dark:bg-gray-700">
+              <option value="2">Agent</option>
+              <option value="1">User</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-medium mb-1">Commission (Enter 0 - 10)</label>
+            <input type="number" id="user_commission" name="amount" value="0" placeholder="Enter Commission " class="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 
+           focus:outline-none focus:ring focus:ring-blue-200
+           dark:border-gray-600 dark:bg-gray-700 dark:text-white" />
+          </div> -->
+        </form>
+        <!-- Footer -->
+        <div class="flex items-center justify-end gap-2 px-5 py-4 border-t border-gray-200 dark:border-gray-700">
+          <button onclick="closedepositModal()"
+            class="px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700">
+            Cancel
+          </button>
+          <button type="button" onclick="SubmitAction()"
+            class="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700">
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+   <!-- Delete Confirmation Modal -->
+<div id="deleteConfirmModal2"
+  class="fixed inset-0 z-50 hidden bg-black/60 backdrop-blur-sm flex items-center justify-center">
+  <div class="w-full max-w-md rounded-2xl bg-white text-gray-900 shadow-xl dark:bg-gray-800 dark:text-gray-100">
+    <!-- Header -->
+    <div class="flex items-center justify-between px-5 py-4 border-b border-gray-200 dark:border-gray-700">
+      <h3 class="text-lg font-semibold">Confirm Deletion</h3>
+      <button onclick="closeDeleteModal()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
+        ✕
+      </button>
+    </div>
+    <!-- Body -->
+    <div class="px-5 py-6 text-center">
+      <p class="text-base">Are you sure you want to delete this item? This action cannot be undone.</p>
+    </div>
+    <!-- Footer -->
+    <div class="flex items-center justify-end gap-2 px-5 py-4 border-t border-gray-200 dark:border-gray-700">
+      <button onclick="closeDeleteModal()"
+        class="px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-100 dark:border-gray-600 dark:hover:bg-gray-700">
+        Cancel
+      </button>
+      <input type="hidden" id="deltedmode" value="">
+      <button type="button" onclick="removedata()"
+        class="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700">
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
+
+    <!-- JS -->
+    <script>
+      
+      let current_page = 1;
+      let total_page = 1;
+      let startdate;
+      let enddate;
+      let searchitem;
+      let login_type  = 0;
+      function openBlockModal(item) {
+        let name = item.getAttribute('data-na');
+        let idd = item.getAttribute('data-id');
+        let block = item.getAttribute('data-bl');
+        document.getElementById("useridd").value = idd;
+        console.log(name + " · ID:" + idd);
+        document.getElementById('show_user_D').innerHTML = name + " · ID:" + idd + " · " + (block == 0 ? "active" : "block");
+        document.getElementById('blockUserModal').classList.remove('hidden');
+      }
+      function closeBlockModal() {
+        document.getElementById('blockUserModal').classList.add('hidden');
+      }
+      function closeDeleteModal() {
+        document.getElementById('deleteConfirmModal2').classList.add('hidden');
+      }
+      function OpenDeleteModal(para) {
+        let idd = para.getAttribute('data-id');
+        document.getElementById('deltedmode').value = idd;
+        document.getElementById('deleteConfirmModal2').classList.remove('hidden');
+      }
+      function blockUserAction() {
+        closeBlockModal();
+        showSuccessToast("this id popup");
+      }
+      function openAddDepositModal() {
+        document.getElementById('blockUserModal1').classList.remove('hidden');
+      }
+      function closedepositModal() {
+        console.log("hide popup");
+
+        document.getElementById('blockUserModal1').classList.add('hidden');
+      }
+      function showSuccessToast(value) {
+        document.getElementById("showerror").innerHTML = value;
+        const toast = document.getElementById('successToast');
+        toast.classList.remove('hidden');
+        setTimeout(() => {
+          hideSuccessToast();
+        }, 3000);
+      }
+      function hideSuccessToast() {
+        document.getElementById('successToast').classList.add('hidden');
+      }
+    </script>
+    <script>
+      function fillter(){
+        searchitem = document.getElementById('search_bar').value;
+        startdate = document.getElementById('startdate').value;
+        enddate = document.getElementById('enddate').value;
+        getalluser();
+      }
+
+     
+      // get all user
+      getalluser();
+      function getalluser() {
+        const url = "/user/alluser";
+        const data = {page : current_page , token, role: 'subadmin', startdate, enddate, search: searchitem, login_type };
+        fetch(url, {
+          method: "POST",
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${Jwt}` },
+          body: JSON.stringify(data)
+        })
+          .then(res => res.json())
+          .then(result => {
+            console.log('API response:', result);            
+            total_page = result.total_pages;
+            document.getElementById('cureent_pages').innerHTML = current_page;
+            document.getElementById('cureent_pages1').innerHTML = current_page;
+            document.getElementById('Total_enter').innerHTML = result.total;
+            if (result.data && Array.isArray(result.data)) {
+              const tableBody = document.getElementById("showdata");
+              tableBody.innerHTML = ""; // Clear old data
+
+              result.data.forEach(user => {
+                const row = `
+            <tr>
+              <td class="p-3 border text-center">${user.id}</td>
+              <td class="p-1 border text-center">
+                <div>
+                  <i mr-1 class="fa-solid fa-edit" onclick="window.location.href='/user/editprofile?id=${user.id}'"></i>
+                  <i mr-1 class="fa-solid fa-trash" onclick="OpenDeleteModal(this)" data-id="${user.id}"></i>
+                  <i onclick="openBlockModal(this)" data-id="${user.id}" data-na="${user.name}" data-bl="${user.block}" class="fa-solid fa-ban  text-red-500"></i>
+                </div>
+              </td>
+              <td class="p-3 border text-center">${user.name}</td>
+              <td class="p-3 border text-center">${user.mobile}</td>
+              <td class="p-3 border text-center">${user.wallet}</td>
+              <td class="p-3 border text-center">${user.winwallet}</td>
+              <td class="p-3 border text-center">${user.otp}</td>
+              <td class="p-3 border text-center">${user.login_type == 1 ? "user" : user.login_type == 2 ? "agent" : "admin"}</td>
+              <td class="p-3 border text-center">${(user.block==0) ?"active" : "block"}</td>
+              <td class="p-3 border text-center">${user.join_time}</td>
+            </tr>
+          `;
+                tableBody.insertAdjacentHTML("beforeend", row);
+              });
+            } else {
+              showSuccessToast("No user data found.");
+            }
+          })
+          .catch(error => {
+            console.log('Error:', error);
+            showSuccessToast("Server error");
+          });
+      }
+
+      function nextpage(){
+        if(current_page < total_page){
+            current_page++;
+            getalluser();
+        }
+      }
+      function backpage(){
+        if(current_page > 1){
+            current_page--;
+            getalluser();
+        }
+      }
+
+      // add new use
+      function SubmitAction() {
+        let name = document.getElementById('user_name').value.trim();
+        let mobile = document.getElementById('user_mobile').value.trim();
+        let password = document.getElementById('user_password').value.trim();
+
+
+        if (!name || !mobile || !password) {
+          showSuccessToast("Please fill all the fields.");
+          return;
+        }
+        const token = sessionStorage.getItem('subadmin_token');
+        // Create the payload object
+        const payload = {
+          name: name,
+          mobile: mobile,
+          password: password,
+          token
+        };
+
+        // Call the API using fetch
+        fetch("/user/add_user", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${Jwt}`
+          },
+          body: JSON.stringify(payload)
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.status === 1) {
+              closedepositModal();
+              getalluser();
+              showSuccessToast(data.message);
+            } else {
+              showSuccessToast(data.message || "Something went wrong.");
+            }
+          })
+          .catch(error => {
+            console.error("API Error:", error);
+            showSuccessToast("Could not connect to server.");
+          });
+      }
+      // add new use
+      function removedata() {
+        let idd = document.getElementById('deltedmode').value;
+        const token = sessionStorage.getItem('subadmin_token');
+        // Create the payload object
+        const payload = {
+          id : idd,
+          token
+        };
+
+        // Call the API using fetch
+        fetch("/user/removeuser", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${Jwt}`
+          },
+          body: JSON.stringify(payload)
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.status === 1) {
+              closeDeleteModal();
+              showSuccessToast(data.message);
+              getalluser();
+            } else {
+              showSuccessToast(data.message || "Something went wrong.");
+            }
+          })
+          .catch(error => {
+            console.error("API Error:", error);
+            showSuccessToast("Could not connect to server.");
+          });
+      }
+
+      function blockuser(){
+        let useridd = document.getElementById('useridd').value;
+        let blocktype = document.getElementById('blocktype').value;
+        const token = sessionStorage.getItem('subadmin_token');
+        // Create the payload object
+        const payload = {
+          id : useridd,
+          blocktype,
+          token
+        };
+
+        // Call the API using fetch
+        fetch("/user/userblock", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${Jwt}`
+          },
+          body: JSON.stringify(payload)
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.status === 1) {
+              closeBlockModal();
+              showSuccessToast(data.message);
+              getalluser();
+            } else {
+              showSuccessToast(data.message || "Something went wrong.");
+            }
+          })
+          .catch(error => {
+            console.error("API Error:", error);
+            showSuccessToast("Could not connect to server.");
+          });
+      }
+    </script>

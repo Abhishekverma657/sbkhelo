@@ -1,0 +1,329 @@
+<%- include('layout/header') %>
+<!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" /> -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script> -->
+
+<div class="container">
+    <div class="page-inner">
+      <div class="page-header" style="justify-content: space-between;">
+        <h3 class="fw-bold mb-3">All User</h3>
+        <ul class="breadcrumbs mb-3">
+          <li class="nav-home">
+            <a href="#">
+              <i class="icon-home"></i>
+            </a>
+          </li>
+          <li class="separator">
+            <i class="icon-arrow-right"></i>
+          </li>
+          <li class="nav-item">
+            <a href="#">User</a>
+          </li>
+          <li class="separator">
+            <i class="icon-arrow-right"></i>
+          </li>
+          <li class="nav-item">
+            <a href="#">All User</a>
+          </li>
+        </ul>
+        <button class="btn btn-warning text-light" id="exportButton" style="margin-right: 0;">Export</button>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <!-- Card Header -->
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h4 class="card-title">Basic</h4>
+              <div class="input-group" style="width: auto;">
+                <input type="search" id="form1" class="form-control" placeholder="Search" aria-label="Search" />
+                <button type="button" class="btn btn-primary">
+                  <i class="fas fa-search"></i>
+                </button>
+              </div>
+            </div>
+      
+             <!-- Date Filters -->
+      <div class="card-body">
+        <div class="row mb-3 align-items-end">
+          <div class="col-md-4">
+            <label for="startDate" class="form-label">Start Date</label>
+            <input type="date" id="startDate" class="form-control" />
+          </div>
+          <div class="col-md-4">
+            <label for="endDate" class="form-label">End Date</label>
+            <input type="date" id="endDate" class="form-control" />
+          </div>
+          <div class="col-md-4">
+            <button type="button" id="filterButton" class="btn btn-success w-100">
+              <i class="fas fa-filter"></i> Filter
+            </button>
+          </div>
+        </div>
+      
+              <!-- Table -->
+              <div class="table-responsive">
+                <table  class="display table table-striped table-hover">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Active</th>
+                      <th>Name</th>
+                      <th>Mobile</th>
+                      <th>Upline</th>
+                      <th>Wallet</th>
+                      <th>Win Wallet</th>
+                      <th>Bonus</th>
+                      <th>Deposit</th>
+                      <th>Withdrawl</th>
+                      <th>Win</th>
+                      <th>Lose</th>
+                      <th>Spin</th>
+                      <th>Block</th>
+                      <th>OTP</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                      <th>#</th>
+                      <th>Active</th>
+                      <th>Name</th>
+                      <th>Mobile</th>
+                      <th>Upline</th>
+                      <th>Wallet</th>
+                      <th>Win Wallet</th>
+                      <th>Bonus</th>
+                      <th>Deposit</th>
+                      <th>Withdrawl</th>
+                      <th>Win</th>
+                      <th>Lose</th>
+                      <th>Spin</th>
+                      <th>Block</th>
+                      <th>OTP</th>
+                      <th>Date</th>
+                    </tr>
+                  </tfoot>
+                  <tbody id="tableprint">
+                                       
+                  </tbody>
+                </table>
+              </div>
+      
+              <!-- Pagination -->
+              <div class="row align-items-center">
+                <div class="col-md-5 mb-3 mb-md-0">
+                  <div class="dataTables_info">
+                    Showing Pages <span id="totalenter"></span> entries <span id="totalRows"> page</span> 
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <nav aria-label="Table Pagination">
+                    <ul class="pagination justify-content-end">
+                      <li class="page-item ">
+                        <a class="page-link" id="perviousP">Previous</a>
+                      </li>
+                      <li class="page-item active">
+                        <a class="page-link"  id="totalpageshow">2</a>
+                      </li>
+                      <li class="page-item">
+                        <a class="page-link"  id="nextP">Next</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+       
+      </div>
+    </div>
+  </div>
+  <script>
+    let page = 1;
+    let totalpage = 1;
+
+      function fetchData() {
+        const requestData = {
+          item: $('#form1').val().trim(),
+          page : page,
+        };
+  
+        // Add date filters only if both startDate and endDate are provided
+        const startDate = $('#startDate').val();
+        const endDate = $('#endDate').val();
+        if (startDate && endDate) {
+          requestData.startdate = startDate;
+          requestData.enddate = endDate;
+        }
+  
+        // Make AJAX request to fetch data
+        $.ajax({
+          url: '/activeusersAPi', // Your Node.js API endpoint
+          type: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify(requestData),
+          success: function (response) {
+            const user =response; // Corrected this line from 'respona' to 'response'
+            var tbody = document.getElementById("tableprint");
+            tbody.innerHTML = "";
+            var ve = user.data;
+            totalpage =  user.pagination.totalPages;
+            document.getElementById("totalpageshow").innerHTML = user.pagination.currentPage; 
+            document.getElementById("totalenter").innerHTML = user.pagination.totalPages; 
+            document.getElementById("totalRows").innerHTML = user.pagination.totalRows; 
+            ve.forEach(element => {
+              var row = document.createElement("tr");
+              var td = 
+                  "<th scope='row'>" + element.id + " </th>"
+                  + "<th>"
+                  + "<i class='fa fa-trash text-danger delete-icon' type='button' id='alert_demo_7' style='font-size:20px;margin-right:5px' data-da='" + element.id + "'></i>"
+                  + "<i class='fa fa-address-card' style='font-size:20px;margin-left:5px;' onclick=\"window.location.href='user/' + " + element.id + "\"></i>"
+                  + "</th>"
+                  + "<td>" + element.name + "</td>"
+                  + "<td><a href='/user/"+element.id+"'>" + element.mobile + "</a></td>"
+                  + "<td>" + element.uperline + "</td>"
+                  + "<td>" + element.wallet + "</td>"
+                  + "<td>" + element.winamount + "</td>"
+                  + "<td>" + element.bonus + "</td>"
+                  + "<td>" + element.totalrech + "</td>"
+                  + "<td>" + element.totalwith + "</td>"
+                  + "<td>" + element.totalwin + "</td>"
+                  + "<td>" + element.totalBet + "</td>"
+                  + "<td>" + element.spinlimit + "</td>"
+                  + "<td>" + element.block + "</td>"
+                  + "<td>" + element.Otp + "</td>"
+                  + "<td>" + element.joindate + "</td>";
+              ;
+              row.innerHTML = td;
+
+              tbody.appendChild(row);
+              // pagenumber.innerHTML = page;
+            });
+          },
+
+          error: function (xhr, status, error) {
+            console.error('Failed to fetch data:', error);
+          },
+        });
+      }
+  
+
+  
+      // Load data initially
+      fetchData();
+  
+      // Reload data on search input change
+      $('#form1').on('keyup', function () {
+        fetchData();
+      });
+  
+      // Reload data on date filter button click
+      $('#filterButton').on('click', function () {
+        fetchData();
+      });
+      $('#perviousP').on('click', function () {
+        if(page > 1){
+          page--;
+          fetchData();
+        }
+      });
+      $('#nextP').on('click', function () {
+
+        if(page < totalpage){
+          page++;
+          fetchData();
+        }
+      });
+  </script>
+  <script>
+    $(document).on('click', '.delete-icon', function (e) {
+    const recordsIdd = $(this).data('da');
+    const requestData1 = {
+          iddd: recordsIdd,
+        };
+    swal({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        type: "warning",
+        buttons: {
+            confirm: {
+                text: "Yes, delete it!",
+                className: "btn btn-success",
+            },
+            cancel: {
+                visible: true,
+                className: "btn btn-danger",
+            },
+        },
+    }).then((Delete) => {
+        if (Delete) {
+          $.ajax({
+            url: '/DeletedusersAPi', // Your Node.js API endpoint
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(requestData1),
+            success: function (response) {
+              const user =response;
+              if(response.status == 1){
+                swal({
+                  title: "Deleted!",
+                  text: response.message,
+                  type: "success",
+                  buttons: {
+                    confirm: {
+                      className: "btn btn-success",
+                    },
+                  },
+                  });
+                  fetchData();
+              }else{
+                swal({
+                  title: "Sever Error!",
+                  text: response.message,
+                  type: "info",
+                });
+              }
+            }
+          });
+            
+        } else {
+            swal.close();
+        }
+    });
+});
+
+  </script>
+<script>
+  document.getElementById('exportButton').addEventListener('click', function () {
+    // Trigger export
+    fetch('/activeDataApi', {
+      method: 'GET',
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.blob(); // Expect a file download
+        } else {
+          throw new Error('Failed to export data');
+        }
+      })
+      .then((blob) => {
+        // Create a download link and click it
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'exported_data.csv'; // Filename
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+      })
+      .catch((error) => {
+        console.error(error);
+        alert('Error exporting data');
+      });
+  });
+</script>
+
+<%- include('layout/footer') %>

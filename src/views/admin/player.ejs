@@ -1,0 +1,686 @@
+<%- include('layout/header') %>
+  <!-- <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" /> -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <!-- <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script> -->
+  <div class="container">
+    <div class="page-inner">
+      <div class="page-header" style="justify-content: space-between;">
+        <h3 class="fw-bold mb-3">All User</h3>
+        <ul class="breadcrumbs mb-3">
+          <li class="nav-home">
+            <a href="#">
+              <i class="icon-home"></i>
+            </a>
+          </li>
+          <li class="separator">
+            <i class="icon-arrow-right"></i>
+          </li>
+          <li class="nav-item">
+            <a href="#">User</a>
+          </li>
+          <li class="separator">
+            <i class="icon-arrow-right"></i>
+          </li>
+          <li class="nav-item">
+            <a href="#">All User</a>
+          </li>
+        </ul>
+        <!-- Button trigger modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#depositModal">
+          Add Admin..
+        </button>
+        <button class="btn btn-warning text-light" id="exportButton" style="margin-right: 0;">Export</button>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <!-- Card Header -->
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h4 class="card-title">Basic</h4>
+              <div class="input-group" style="width: auto;">
+                <input type="search" id="form1" class="form-control" placeholder="Search" aria-label="Search" />
+                <button type="button" class="btn btn-primary">
+                  <i class="fas fa-search"></i>
+                </button>
+              </div>
+            </div>
+
+           <!-- Date & User Type Filters -->
+<div class="card-body">
+  <div class="row g-3 align-items-end">
+    
+    <!-- Start Date -->
+    <div class="col-md-3">
+      <label for="startDate" class="form-label">Start Date</label>
+      <input type="date" id="startDate" class="form-control" />
+    </div>
+
+    <!-- User Type Dropdown -->
+    <div class="col-md-3">
+      <label for="userType" class="form-label">User Type</label>
+      <select id="userType" class="form-control">
+        <option value="0">Select User Type</option>
+        <option value="0">All Menber</option>
+        <option value="1">Normal User</option>
+        <option value="3">Admin</option>
+      </select>
+    </div>
+
+    <!-- End Date -->
+    <div class="col-md-3">
+      <label for="endDate" class="form-label">End Date</label>
+      <input type="date" id="endDate" class="form-control" />
+    </div>
+
+    <!-- Filter Button -->
+    <div class="col-md-3">
+      <button type="button" id="filterButton" class="btn btn-success w-100">
+        <i class="fas fa-filter"></i> Filter
+      </button>
+    </div>
+
+  </div>
+</div>
+
+              <!-- Table -->
+              <div class="table-responsive">
+                <table class="display table table-striped table-hover">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                               <th class="p-3 border">Delete&nbsp;or&nbsp;profile</th>
+              <th class="p-3 border">Action</th>
+                      <th>Name</th>
+                      <th>Mobile</th>
+                      <th>Email</th>
+                      <th>Upline</th>
+                      <th>Admin</th>
+                      <th>Wallet</th>
+                      <th>Win Wallet</th>
+                      <th>Commission</th>
+                      <th>Deposit</th>
+                      <th>Withdrawl</th>
+                      <th>Win</th>
+                      <th>Lose</th>
+                      <th>Block</th>
+                      <th>OTP</th>
+                      <th>Commission</th>
+                      <th>login type</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                       <th class="p-3 border">Delete&nbsp;or&nbsp;profile</th>
+              <th class="p-3 border">Action</th>
+                      <th>Name</th>
+                      <th>Mobile</th>
+                      <th>Email</th>
+                      <th>Upline</th>
+                      <th>Admin</th>
+                      <th>Wallet</th>
+                      <th>Win Wallet</th>
+                      <th>Commission</th>
+                      <th>Deposit</th>
+                      <th>Withdrawl</th>
+                      <th>Win</th>
+                      <th>Lose</th>
+                      <th>Block</th>
+                      <th>OTP</th>
+                      <th>Commission</th>
+                      <th>login type</th>
+                      <th>Date</th> 
+                    </tr>
+                  </tfoot>
+                  <tbody id="tableprint">
+
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Pagination -->
+              <div class="row align-items-center">
+                <div class="col-md-5 mb-3 mb-md-0">
+                  <div class="dataTables_info">
+                    Showing Pages <span id="totalenter"></span> entries <span id="totalRows"> page</span>
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <nav aria-label="Table Pagination">
+                    <ul class="pagination justify-content-end">
+                      <li class="page-item ">
+                        <a class="page-link" id="perviousP">Previous</a>
+                      </li>
+                      <li class="page-item active">
+                        <a class="page-link" id="totalpageshow">2</a>
+                      </li>
+                      <li class="page-item">
+                        <a class="page-link" id="nextP">Next</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  </div>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="depositModal" tabindex="-1" aria-labelledby="depositModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+
+        <!-- Header -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="depositModalLabel">Add  Admin</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <!-- Body -->
+        <div class="modal-body">
+          <form id="depositForm">
+
+            <div class="mb-3">
+              <label class="form-label">user name</label>
+              <input type="text" name="userid" id="user_name" class="form-control" placeholder="Enter user name">
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">user mobile</label>
+              <input type="number" name="amount" id="user_mobile" class="form-control" placeholder="Enter mobile">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">user mobile</label>
+              <input type="email" name="email" id="email" class="form-control" placeholder="Enter email">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">user password</label>
+              <input type="password" name="amount" id="user_password" class="form-control" placeholder="Enter password">
+            </div>
+
+            <div class="mb-3" style="display: none;">
+              <label class="form-label">User Type</label>
+              <select name="duration" id="user_type" class="form-select">
+                <option selected value="3">user</option>
+                <option value="2">agent</option>
+                <option value="3">admin</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Commission (Enter 0 - 10) </label>
+              <input type="number" min="0" max="10" name="amount" value="0" id="user_commission" class="form-control" placeholder="Enter commission">
+            </div>
+
+          </form>
+        </div>
+
+        <!-- Footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger" onclick="SubmitAction()">Submit</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+    <!-- Bootstrap Modal -->
+<div class="modal fade" id="blockdepost" tabindex="-1" aria-labelledby="blockdepostLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      
+      <!-- Header -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="blockdepostLabel">Add User / Recharge</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body">
+        <form id="blockUserForm" class="space-y-3">
+          <div class="mb-3">
+            <label for="searchId" class="form-label">Search User / Mobile</label>
+            <input type="text" id="searchId" class="form-control" placeholder="Search user or mobile">
+          </div>
+
+          <div class="table-responsive mb-3">
+            <table class="table table-sm table-bordered">
+              <tbody id="table2">
+                <!-- Dynamic user search results -->
+              </tbody>
+            </table>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <label class="form-label">Recharge Type</label>
+              <select id="reschAdd" class="form-select">
+                <option value="1">Add Deposit</option>
+                <option value="2">Cut Deposit</option>
+                <option value="4">Cut Withdrawals</option>
+              </select>
+            </div>
+
+            <div class="col-sm-6">
+              <label class="form-label">Amount</label>
+              <input type="number" id="amountF" class="form-control" placeholder="Enter Amount">
+            </div>
+
+            <div class="col-sm-6">
+              <label class="form-label">Notifications</label>
+              <select id="NotificationsOn" class="form-select">
+                <option value="1">Not Send</option>
+                <option value="2">Send</option>
+              </select>
+            </div>
+
+            <div class="col-12">
+              <label class="form-label">Message</label>
+              <textarea id="nottext" class="form-control" rows="3" placeholder="Enter your message..."></textarea>
+            </div>
+          </div>
+
+          <!-- Hidden fields -->
+          <div class="d-none">
+            <select id="user_type" class="form-select">
+              <option value="1" selected>User</option>
+              <option value="2">Agent</option>
+            </select>
+          </div>
+
+          <div class="d-none">
+            <input type="number" id="user_commission" value="0" class="form-control">
+          </div>
+        </form>
+      </div>
+
+      <!-- Footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" onclick="MakePayment()" class="btn btn-primary">Submit</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+   <!-- Success Toast -->
+    <div id="successToast"
+      class="fixed top-5 right-5 z-50 hidden items-center gap-3 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg shadow-lg animate-slide-in">
+      <i class="fa-solid fa-circle-check text-green-500 text-xl"></i>
+      <span class="font-medium" id="showerror">this demo panel !</span>
+      <button onclick="hideSuccessToast()" class="ml-2 text-green-700 hover:text-green-900 font-bold">
+        &times;
+      </button>
+    </div>
+
+  <script>
+
+function SubmitAction() {
+  let name = document.getElementById('user_name').value.trim();
+  let mobile = document.getElementById('user_mobile').value.trim();
+  let password = document.getElementById('user_password').value.trim();
+  let type = document.getElementById('user_type').value.trim();
+  let email = document.getElementById('email').value.trim();
+  let commission = document.getElementById('user_commission').value.trim();
+
+  if (!name || !mobile || !password || !type || !commission) {
+    swal({
+      title: "Missing Fields!",
+      text: "Please fill all the fields.",
+      icon: "warning",
+    });
+    return;
+  }
+
+  // Create the payload object
+  const payload = {
+    name: name,
+    mobile: mobile,
+    password: password,
+    type: type,
+    commission: commission,
+    email
+  };
+
+  // Call the API using fetch
+  fetch("/add_user", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload)
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.status === 1 ) {
+      fetchData();
+      swal({
+        title: "Success!",
+        text: "User added successfully.",
+        icon: "success",
+      });
+    } else {
+      swal({
+        title: "Error!",
+        text: data.message || "Something went wrong.",
+        icon: "error",
+      });
+    }
+  })
+  .catch(error => {
+    console.error("API Error:", error);
+    swal({
+      title: "Server Error!",
+      text: "Could not connect to server.",
+      icon: "error",
+    });
+  });
+}
+
+function setUserId(element) {
+  const userId = element.getAttribute('data-id');
+  document.getElementById('searchId').value = userId;
+}
+
+    let page = 1;
+    let totalpage = 1;
+
+    function fetchData() {
+
+      const userType = Number($('#userType').val());
+      const requestData = {
+        item: $('#form1').val().trim(),
+        page: page,
+        userType
+      };
+
+      // Add date filters only if both startDate and endDate are provided
+      const startDate = $('#startDate').val();
+      const endDate = $('#endDate').val();
+      if (startDate && endDate) {
+        requestData.startdate = startDate;
+        requestData.enddate = endDate;
+      }
+
+      // Make AJAX request to fetch data
+      $.ajax({
+        url: '/allusersAPi', // Your Node.js API endpoint
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(requestData),
+        success: function (response) {
+          const user = response; // Corrected this line from 'respona' to 'response'
+          var tbody = document.getElementById("tableprint");
+          tbody.innerHTML = "";
+          var ve = user.data;
+          totalpage = user.pagination.totalPages;
+          document.getElementById("totalpageshow").innerHTML = user.pagination.currentPage;
+          document.getElementById("totalenter").innerHTML = user.pagination.totalPages;
+          document.getElementById("totalRows").innerHTML = user.pagination.totalRows;
+          ve.forEach(element => {
+            var row = document.createElement("tr");
+            var td =
+              "<th scope='row'>" + element.id + " </th>"
+              + "<th style='width: 100px;'>"
+              + "<i class='fa fa-trash text-danger delete-icon' type='button' id='alert_demo_7' style='font-size:20px;margin-right:5px;' data-da='" + element.id + "'></i>" 
+              + "<i class='fa fa-address-card' style='font-size:20px;margin-left:5px;margin-left:40px' onclick=\"window.location.href='user/' + " + element.id + "\"></i>"
+              + "</th>"
+          + "<th>"
++ "<i data-bs-toggle='modal' data-bs-target='#blockdepost' data-id='" + element.id + "' class='fa-solid fa-money-bill-wave text-success' onclick='setUserId(this)'></i>"
++ "</th>"
+
+
+              + "<td>" + element.name + "</td>"
+              + "<td><a href='/super/user/" + element.id + "'>" + element.mobile + "</a></td>"
+              + "<td>" + element.email + "</td>"
+              + "<td>" + element.uperline + "</td>"
+              + "<td>" + element.admin_uperline + "</td>"
+              + "<td>" + element.wallet + "</td>"
+              + "<td>" + element.winamount + "</td>"
+              + "<td>" + element.commission1 + "</td>"
+              + "<td>" + element.totalrech + "</td>"
+              + "<td>" + element.totalwith + "</td>"
+              + "<td>" + element.totalwin + "</td>"
+              + "<td>" + element.totalBet + "</td>"
+              // + "<td>" + element.spinlimit + "</td>"
+              + "<td>" + element.block + "</td>"
+              + "<td>" + element.Otp + "</td>"
+            + "<td>" + element.Commission+ "</td>"
+
+              + "<td>" + (
+                element.login_type == 3 ? 'Admin' :
+                  element.login_type == 2 ? 'Agent' :
+                    'User'
+              ) + "</td>"
+
+              + "<td>" + element.joindate + "</td>";
+            ;
+            row.innerHTML = td;
+
+            tbody.appendChild(row);
+            // pagenumber.innerHTML = page;
+          });
+        },
+
+        error: function (xhr, status, error) {
+          console.error('Failed to fetch data:', error);
+        },
+      });
+    }
+
+
+
+    // Load data initially
+    fetchData();
+
+    // Reload data on search input change
+    $('#form1').on('keyup', function () {
+      fetchData();
+    });
+
+    // Reload data on date filter button click
+    $('#filterButton').on('click', function () {
+      fetchData();
+    });
+    $('#perviousP').on('click', function () {
+      if (page > 1) {
+        page--;
+        fetchData();
+      }
+    });
+    $('#nextP').on('click', function () {
+
+      if (page < totalpage) {
+        page++;
+        fetchData();
+      }
+    });
+  </script>
+  <script>
+    $(document).on('click', '.delete-icon', function (e) {
+      const recordsIdd = $(this).data('da');
+      const requestData1 = {
+        iddd: recordsIdd,
+      };
+      swal({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        type: "warning",
+        buttons: {
+          confirm: {
+            text: "Yes, delete it!",
+            className: "btn btn-success",
+          },
+          cancel: {
+            visible: true,
+            className: "btn btn-danger",
+          },
+        },
+      }).then((Delete) => {
+        if (Delete) {
+          $.ajax({
+            url: '/DeletedusersAPi', // Your Node.js API endpoint
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(requestData1),
+            success: function (response) {
+              const user = response;
+              if (response.status == 1) {
+                swal({
+                  title: "Deleted!",
+                  text: response.message,
+                  type: "success",
+                  buttons: {
+                    confirm: {
+                      className: "btn btn-success",
+                    },
+                  },
+                });
+                fetchData();
+              } else {
+                swal({
+                  title: "Sever Error!",
+                  text: response.message,
+                  type: "info",
+                });
+              }
+            }
+          });
+
+        } else {
+          swal.close();
+        }
+      });
+    });
+
+  </script>
+  <script>
+    document.getElementById('exportButton').addEventListener('click', function () {
+      // Trigger export
+      fetch('/exportDataApi', {
+        method: 'GET',
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.blob(); // Expect a file download
+          } else {
+            throw new Error('Failed to export data');
+          }
+        })
+        .then((blob) => {
+          // Create a download link and click it
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'exported_data.csv'; // Filename
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          window.URL.revokeObjectURL(url);
+        })
+        .catch((error) => {
+          console.error(error);
+          alert('Error exporting data');
+        });
+    });
+  </script>
+
+
+<script>
+async function MakePayment() {
+  let reschAdd = document.getElementById("reschAdd").value;
+  let amountF = document.getElementById("amountF").value;
+  let searchId = document.getElementById("searchId").value;
+  let NotificationsOn = document.getElementById("NotificationsOn").value;
+  let nottext = document.getElementById("nottext").value;
+
+  if (!reschAdd || !amountF || !searchId) {
+    swal({
+      title: "Parameter Missing!",
+      text: "thanks",
+      type: "error",
+    });
+    return;
+  }
+
+  if (NotificationsOn == 2 && !nottext) {
+    swal({
+      title: "Parameter Missing!",
+      text: "thank",
+      type: "error",
+    });
+    return;
+  }
+
+  const sendData = {
+    reschAdd,
+    amountF,
+    searchId,
+    NotificationsOn,
+    nottext
+  };
+
+  try {
+    const response = await fetch("makePayment1", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(sendData),
+    });
+
+    const respona = await response.json();
+
+    if (respona.Qstatus == 1) {
+      document.getElementById("amountF").value = "";
+      document.getElementById("searchId").value = "";
+      document.getElementById("nottext").value = "";
+      // close modal
+      // const closeButton = document.getElementById("closeBtn1");
+      // if (closeButton) closeButton.click();
+      // showSuccessToast(respona.message);
+      hideDepositPopup();
+      fetchData();
+    } else {
+      // showSuccessToast(respona.message);
+      fetchData();
+      // hidemakepayment(1);
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    // showSuccessToast(respona.message);
+    fetchData();
+    // hidemakepayment(1);
+  }
+}
+
+function hideDepositPopup() {
+  console.log("ADfg");
+  
+  const modalEl = document.getElementById('blockdepost');
+  const modal = bootstrap.Modal.getInstance(modalEl); // get the current modal instance
+  if (modal) {
+    modal.hide(); // close it
+  }
+}
+
+
+function showSuccessToast(value) {
+        document.getElementById("showerror").innerHTML = value;
+        const toast = document.getElementById('successToast');
+        toast.classList.remove('hidden');
+        setTimeout(() => {
+          hideSuccessToast();
+        }, 3000);
+      }
+</script>
+
+  <%- include('layout/footer') %>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Bet API Tester</title>
+
+<style>
+body{font-family:Arial;padding:20px;background:#111;color:#fff}
+button{padding:10px 18px;font-size:16px;margin-top:10px}
+input{padding:8px;font-size:16px;width:120px}
+
+#log{
+margin-top:20px;
+background:#000;
+padding:12px;
+height:350px;
+overflow:auto;
+border:1px solid #444;
+font-family:monospace;
+}
+
+.success{color:#4caf50}
+.error{color:#ff5252}
+.info{color:#03a9f4}
+</style>
+</head>
+
+<body>
+
+<h2>🎯 Betting API Tester</h2>
+
+<label>How many API calls?</label>
+<input id="count" type="number" value="2" min="1">
+
+<br>
+<button onclick="placeBet()">SEND API</button>
+
+<div id="log"></div>
+
+<script>
+
+const TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAwNjEsInJvbGUiOiJzdWJhZG1pbiIsImlhdCI6MTc3MTk1MzQ2MCwiZXhwIjoxNzcyNTU4MjYwfQ.CBq29L0CXqyJFMxipu132dv8OMIbSAAbpL3FrLLlixI";
+
+function log(msg,type="info"){
+const d=document.createElement("div");
+d.className=type;
+d.textContent=new Date().toLocaleTimeString()+" → "+msg;
+document.getElementById("log").prepend(d);
+}
+
+async function placeBet(){
+
+const count = Number(document.getElementById("count").value)||1;
+
+for(let i=1;i<=count;i++){
+
+const payload={
+NotificationsOn:"1",
+amountF:"100",
+nottext:"",
+reschAdd:"1",
+searchId:"10064",
+token:"177146738018945"
+};
+
+try{
+
+const res = await fetch("http://localhost:4009/admin/makePayment1",{
+method:"POST",
+headers:{
+"Content-Type":"application/json",
+"Authorization": TOKEN
+},
+body:JSON.stringify(payload)
+});
+
+const data=await res.json();
+
+if(data.status==1){
+log("CALL "+i+" SUCCESS ✔","success");
+}else{
+log("CALL "+i+" FAILED → "+JSON.stringify(data),"error");
+}
+
+}catch(e){
+log("CALL "+i+" NETWORK ERROR","error");
+}
+
+}
+
+}
+
+</script>
+
+</body>
+</html>

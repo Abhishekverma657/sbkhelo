@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Portal</title>
+
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+      color: #f8fafc;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .links {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    a {
+      text-decoration: none;
+      color: #fff;
+      background: #3b82f6;
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      text-align: center;
+      width: 220px;
+    }
+
+    a:hover {
+      background: #2563eb;
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
+    }
+
+    footer {
+      position: absolute;
+      bottom: 15px;
+      font-size: 0.9rem;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to the Funtarget Portal</h1>
+
+  <div class="links">
+    <a href="/superadmin">Go to Super Admin</a>
+    <a href="/admin">Go to Admin</a>
+    <a href="/user">Go to User</a>
+  </div>
+
+  <footer>© 2025 All Rights Reserved</footer>
+</body>
+</html>

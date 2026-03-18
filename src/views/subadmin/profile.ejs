@@ -1,0 +1,225 @@
+<%- include('layout/header') %>
+
+<div class="max-w-md mt-5 ml-5 cards rounded-2xl shadow-lg overflow-hidden border">
+
+  <!-- Header -->
+  <div class="flex flex-col items-center p-6 cards">
+    <!-- Avatar -->
+    <!-- <img src="https://via.placeholder.com/100" alt="Profile"
+      class="w-24 h-24 rounded-full border-4 border-blue-500 shadow-md"> -->
+
+    <!-- Name -->
+    <h2 class="mt-4 text-xl font-semibold" id="name">Loading...</h2>
+    <!-- Mobile -->
+    <p class="text-sm" id="mobile">Loading...</p>
+  </div>
+
+  <!-- Tabs -->
+  <div class="flex border-b border-gray-300 dark:border-gray-700">
+    <button onclick="openTab('profileTab')" id="profileBtn"
+      class="flex-1 py-2 text-center font-medium bg-blue-600 text-white">Profile</button>
+    <button onclick="openTab('passwordTab')" id="passwordBtn"
+      class="flex-1 py-2 text-center font-medium hover:bg-gray-200 dark:hover:bg-gray-700 transition">Change Password</button>
+  </div>
+
+  <!-- Profile Tab -->
+  <form id="profileTab" class="p-6 space-y-5">
+    <!-- Name -->
+    <div>
+      <label class="block text-sm font-medium mb-1">Name</label>
+      <input type="text" name="name" id="name1" value=""
+        class="w-full rounded-lg border border-gray-300 dark:border-gray-600 
+               bg-white dark:bg-gray-700 px-3 py-2 focus:outline-none 
+               focus:ring focus:ring-blue-200 dark:focus:ring-blue-500 dark:text-white">
+    </div>
+
+    <!-- Mobile -->
+    <div>
+      <label class="block text-sm font-medium mb-1">Mobile</label>
+      <input type="tel" name="mobile" id="mobile1" value=""
+        class="w-full rounded-lg border border-gray-300 dark:border-gray-600 
+               bg-white dark:bg-gray-700 px-3 py-2 focus:outline-none 
+               focus:ring focus:ring-blue-200 dark:focus:ring-blue-500 dark:text-white">
+    </div>
+
+    <!-- Save Button -->
+    <div class="pt-3">
+      <button type="button" onclick="profilechange()"
+        class="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 
+               text-white font-medium rounded-lg shadow-md transition">
+        Save Changes
+      </button>
+    </div>
+  </form>
+
+  <!-- Password Tab -->
+  <form id="passwordTab" class="p-6 space-y-5 hidden">
+    <!-- Current Password -->
+    <div>
+      <label class="block text-sm font-medium mb-1">Current Password</label>
+      <input type="password" name="current_password" id="oldpassword" placeholder="Enter current password"
+        class="w-full rounded-lg border border-gray-300 dark:border-gray-600 
+               bg-white dark:bg-gray-700 px-3 py-2 focus:outline-none 
+               focus:ring focus:ring-blue-200 dark:focus:ring-blue-500 dark:text-white">
+    </div>
+
+    <!-- New Password -->
+    <div>
+      <label class="block text-sm font-medium mb-1">New Password</label>
+      <input type="password" id="newpassword" name="new_password" placeholder="Enter new password"
+        class="w-full rounded-lg border border-gray-300 dark:border-gray-600 
+               bg-white dark:bg-gray-700 px-3 py-2 focus:outline-none 
+               focus:ring focus:ring-blue-200 dark:focus:ring-blue-500 dark:text-white">
+    </div>
+    <!-- New Password -->
+    <div>
+      <label class="block text-sm font-medium mb-1">confirm password</label>
+      <input type="password" id="newpassword1" name="new_password" placeholder="Enter new password"
+        class="w-full rounded-lg border border-gray-300 dark:border-gray-600 
+               bg-white dark:bg-gray-700 px-3 py-2 focus:outline-none 
+               focus:ring focus:ring-blue-200 dark:focus:ring-blue-500 dark:text-white">
+    </div>
+
+    <!-- Save Button -->
+    <div class="pt-3">
+      <button type="button" onclick="passwordchange()"
+        class="w-full px-4 py-2 bg-green-600 hover:bg-green-700 
+               text-white font-medium rounded-lg shadow-md transition">
+        Update Password
+      </button>
+    </div>
+  </form>
+</div>
+
+<script>
+function openTab(tabId) {
+  document.getElementById("profileTab").classList.add("hidden");
+  document.getElementById("passwordTab").classList.add("hidden");
+
+  document.getElementById(tabId).classList.remove("hidden");
+
+  document.getElementById("profileBtn").classList.remove("bg-blue-600", "text-white");
+  document.getElementById("passwordBtn").classList.remove("bg-blue-600", "text-white");
+
+  if (tabId === "profileTab") {
+    document.getElementById("profileBtn").classList.add("bg-blue-600", "text-white");
+  } else {
+    document.getElementById("passwordBtn").classList.add("bg-blue-600", "text-white");
+  }
+}
+</script>
+
+
+
+  <%- include('layout/footer') %>
+
+
+    <!-- Success Toast -->
+    <div id="successToast"
+      class="fixed top-5 right-5 z-50 hidden items-center gap-3 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg shadow-lg animate-slide-in">
+      <i class="fa-solid fa-circle-check text-green-500 text-xl"></i>
+      <span class="font-medium" id="showerror">this demo panel !</span>
+      <button onclick="hideSuccessToast()" class="ml-2 text-green-700 hover:text-green-900 font-bold">
+        &times;
+      </button>
+    </div>
+
+    <!-- JS -->
+    <script>
+
+      function blockUserAction() {
+        closeBlockModal();
+        showSuccessToast();
+      }
+      function showSuccessToast(value) {
+        document.getElementById('showerror').innerHTML = value;
+        const toast = document.getElementById('successToast');
+        toast.classList.remove('hidden');
+        setTimeout(() => {
+          hideSuccessToast();
+        }, 3000);
+      }
+      function hideSuccessToast() {
+        document.getElementById('successToast').classList.add('hidden');
+      }
+      window.onload = function() {
+        document.getElementById("name").innerHTML = sessionStorage.getItem('subadmin_name');
+        document.getElementById("name1").value = sessionStorage.getItem('subadmin_name');
+        document.getElementById("mobile").innerHTML = sessionStorage.getItem('subadmin_mobile');
+        document.getElementById("mobile1").value = sessionStorage.getItem('subadmin_mobile');
+      };
+
+      function profilechange(){
+        let name = document.getElementById("name1").value;
+        let mobile = document.getElementById("mobile1").value;
+        const token = sessionStorage.getItem('subadmin_token');
+        // Create the payload object
+        const payload = {
+          name,
+          mobile,
+          token
+        };
+        // Call the API using fetch
+        fetch("/admin/name_edit", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${Jwt}`
+          },
+          body: JSON.stringify(payload)
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.status == 1) {
+              showSuccessToast(data.message);
+              sessionStorage.setItem('subadmin_name', name);
+              sessionStorage.setItem('subadmin_mobile', mobile);
+            } else {
+              showSuccessToast(data.message || "Something went wrong.");
+            }
+          })
+          .catch(error => {
+            console.error("API Error:", error);
+            showSuccessToast("Could not connect to server.");
+          });
+      }
+      
+
+      function passwordchange(){
+        let oldpassword = document.getElementById("oldpassword").value;
+        let newpassword = document.getElementById("newpassword").value;
+        let newpassword1 = document.getElementById("newpassword1").value;
+        const token = sessionStorage.getItem('subadmin_token');
+        // Create the payload object
+        if(newpassword !== newpassword1){
+          showSuccessToast("new password not same");
+          return;
+        }
+        const payload = {
+          oldpassword,
+          newpassword,
+          token
+        };
+        // Call the API using fetch
+        fetch("/admin/C_password", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${Jwt}`
+          },
+          body: JSON.stringify(payload)
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.status == 1) {
+              showSuccessToast(data.message);
+            } else {
+              showSuccessToast(data.message || "Something went wrong.");
+            }
+          })
+          .catch(error => {
+            console.error("API Error:", error);
+            showSuccessToast("Could not connect to server.");
+          });
+      }
+    </script>

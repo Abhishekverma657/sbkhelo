@@ -1,0 +1,227 @@
+<%- include('../layout/header') %>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <div class="pt-4 m-3"></div>
+    <div class="pt-4 m-3"></div>
+
+    <div class="row m-3 justify-content-around">
+        <!-- Left Section: Profile Card -->
+        <div class="col-md-5">
+            <div class="card card-profile">
+                <!-- Card Header -->
+                <div class="card-header" style="background-image: url('assets/img/blogpost.jpg')">
+                    <div class="profile-picture">
+                        <div class="avatar avatar-xl">
+                            <img src="/assets/img/profile.jpg" alt="Profile Picture"
+                                class="avatar-img rounded-circle" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Body -->
+                <div class="card-body">
+                    <div class="user-profile text-center">
+                        <div class="d-flex justify-content-between">
+                            <p>Name : </p>
+                            <p>
+                                <%= user.username %>
+                            </p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <p>Mobile : </p>
+                            <p>
+                                <%= user.mobile %>
+                            </p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <p>Wallet : </p>
+                            <p>₹<%= user.wallet || 0 %>
+                            </p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <p>Win Wallet : </p>
+                            <p>₹<%= user.winWallet || 0 %>
+                            </p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <p>Total Win : </p>
+                            <p>₹<%= user.winAmount || 0 %>
+                            </p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <p>Total Lose : </p>
+                            <p>₹<%= user.LoseAmount || 0 %>
+                            </p>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <p>Join Date : </p>
+                            <p>
+                                <%= user.time %>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Right Section: Stats and Date Filter -->
+        <div class="col-md-7">
+            <!-- Date Filter Card -->
+            <!-- Date Filters -->
+            <div class="card-body">
+                <div class="card card-stats card-round shadow-sm " style="overflow: hidden;">
+                    <!-- Scrollable Header Container -->
+                    <div class="d-flex align-items-center"
+                        style="width: 100%; overflow-x: auto; white-space: nowrap;margin-left: 10px;margin-right: 10px;">
+                        <p class="cursor m-2" onclick="window.location.href='/super/user/<%= user.id %>'">Dashboard</p>
+                        <p class="cursor m-2" onclick="window.location.href='/super/user-passbook/<%= user.id %>'">
+                            commission</p>
+                        <p class="cursor m-2" onclick="window.location.href='/super/user-deposit/<%= user.id %>'">Admin
+                            Deposit</p>
+                         <p class="cursor m-2" onclick="window.location.href='/super/user-with/<%= user.id %>'">Withdrawals</p>
+                        <p class="cursor m-2" onclick="window.location.href='/super/user-trade/<%= user.id %>'">Trade
+                        </p>
+                        <p class="cursor m-2 text-primary"
+                            onclick="window.location.href='/super/user-commit/<%= user.id %>'">Community</p>
+                        <p class="cursor m-2" onclick="window.location.href='/super/user-update/<%= user.id %>'">Update
+                            user data</p>
+                         <!-- <p class="cursor m-2" onclick="window.location.href='/super/user-bank/<%= user.id %>'">Update Bank</p> -->
+                    </div>
+                </div>
+
+                <!-- Stats Row -->
+                <div class="row">
+                    <!-- Revenue Card -->
+                    <div class="col-sm-6 mb-3">
+                        <div class="card card-stats card-round shadow-sm cursor" onclick="onclickk(1)">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="icon-big text-center text-success">
+                                            <i class="fas fa-wallet fa-2x"></i>
+                                        </div>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="numbers">
+                                            <p class="card-category mb-1">Total Teams </p>
+                                            <h4 class="card-title"><span id="totalReferrals">londing...</span></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <!-- Table -->
+                    <div class="table-responsive">
+                        <table class="display table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Mobile</th>
+                            
+                                    <th>Deposit</th>
+                                    <th>date</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Mobile</th>
+                   
+                                    <th>Deposit</th>
+                                    <th>date</th>
+                                </tr>
+                            </tfoot>
+                            <tbody id="tableBody">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- AJAX Script for Profile Update -->
+    <script>
+        const userid = '<%= user.id %>';
+        let page = 1;
+        let totalpage = 1;
+
+
+        function fetchData() {
+            const requestData = {
+                userid: userid,
+            };
+            const startDate = $('#startDate').val();
+            const endDate = $('#endDate').val();
+            if (startDate && endDate) {
+                requestData.startdate = startDate;
+                requestData.enddate = endDate;
+            }
+
+            // Make AJAX request to fetch data
+            $.ajax({
+                url: '/Userlevel', // Your Node.js API endpoint
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(requestData),
+                success: function (response) {
+                    const user = response; // Corrected this line from 'respona' to 'response'  
+                    document.getElementById("totalReferrals").innerHTML = user.totalReferrals;
+                    const tableBody = document.getElementById("tableBody");
+                    tableBody.innerHTML = "";
+
+                    // Append rows to the table
+                    user.Rdata.forEach(userData => {
+                        if (userData.userid !== "") {
+                            var row = document.createElement("tr");
+                            row.innerHTML = `
+                            <td>${userData.id}</td>
+                            <td>${userData.name}</td>
+                            <td class='cursor' onclick="window.location.href='user?user=${userData.id}'" >${userData.mobile}</td>
+                            <td>${userData.balance}</td>
+                            <td>${userData.time}</td>
+                        `;
+                            tableBody.appendChild(row);
+                        }
+                    });
+                },
+
+                error: function (xhr, status, error) {
+                    console.error('Failed to fetch data:', error);
+                },
+            });
+        }
+        fetchData();
+
+
+
+        
+
+        function changebtncolor(value) {
+            value--;
+            const nodeList = document.querySelectorAll(".chgbtn");
+            for (let i = 0; i < nodeList.length; i++) {
+                nodeList[i].classList.add('bg-dark');
+                nodeList[i].classList.remove('bg-success');
+                if (i == value) {
+                    nodeList[i].classList.add('bg-success');
+                    nodeList[i].classList.remove('bg-dark');
+                }
+            }
+        }
+    </script>
+
+
+    <%- include('../layout/footer') %>

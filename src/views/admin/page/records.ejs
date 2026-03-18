@@ -1,0 +1,788 @@
+
+
+<%- include('../layout/header') %>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<div class="container">
+  <div class="page-inner">
+    <div class="page-header" style="justify-content: space-between;">
+      <h3 class="fw-bold mb-3">Admin Finance Data</h3>
+      <ul class="breadcrumbs mb-3">
+        <li class="nav-home">
+          <a href="#">
+            <i class="icon-home"></i>
+          </a>
+        </li>
+        <li class="separator">
+          <i class="icon-arrow-right"></i>
+        </li>
+        <li class="nav-item">
+          <a href="#">Finance</a>
+        </li>
+        <li class="separator">
+          <i class="icon-arrow-right"></i>
+        </li>
+        <li class="nav-item">
+          <a href="#">All Data</a>
+        </li>
+      </ul>
+      <button class="btn btn-warning text-light" id="exportButton" style="margin-right: 0;">Export</button>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Tabs Navigation -->
+        <ul class="nav nav-pills nav-secondary mb-3" id="financeTabs" role="tablist">
+          <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="addRech-tab" data-bs-toggle="pill" data-bs-target="#addRech" type="button" role="tab" aria-controls="addRech" aria-selected="true" onclick="loadAddRecharges()">
+              Add Recharges
+            </button>
+          </li>
+          <!-- <li class="nav-item" role="presentation">
+            <button class="nav-link" id="transfer-tab" data-bs-toggle="pill" data-bs-target="#transfer" type="button" role="tab" aria-controls="transfer" aria-selected="false" onclick="loadTransfers()">
+              Transfers
+            </button>
+          </li> -->
+          <li class="nav-item" role="presentation">
+            <button class="nav-link" id="withdraw-tab" data-bs-toggle="pill" data-bs-target="#withdraw" type="button" role="tab" aria-controls="withdraw" aria-selected="false" onclick="loadWithdraws()">
+              Withdrawals
+            </button>
+          </li>
+        </ul>
+
+        <!-- Tabs Content -->
+        <div class="tab-content" id="financeTabsContent">
+          
+          <!-- Add Recharges Tab -->
+          <div class="tab-pane fade show active" id="addRech" role="tabpanel" aria-labelledby="addRech-tab">
+            <div class="card">
+              <!-- Card Header -->
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <h4 class="card-title">Add Recharges</h4>
+                <div class="input-group" style="width: auto;">
+                  <input type="search" id="searchAddRech" class="form-control" placeholder="Search Mobile" aria-label="Search" />
+                  <button type="button" class="btn btn-primary" onclick="fetchAddRecharges()">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Filters -->
+              <div class="card-body">
+                <div class="row mb-3 align-items-end">
+                  <div class="col-md-3">
+                    <label for="addRechUserId" class="form-label">User ID</label>
+                    <input type="text" id="addRechUserId" class="form-control" placeholder="Enter User ID" />
+                  </div>
+                  <div class="col-md-3">
+                    <label for="addRechAdminId" class="form-label">Admin ID</label>
+                    <input type="text" id="addRechAdminId" class="form-control" placeholder="Enter Admin ID" />
+                  </div>
+                  <div class="col-md-2">
+                    <label for="addRechStartDate" class="form-label">Start Date</label>
+                    <input type="date" id="addRechStartDate" class="form-control" />
+                  </div>
+                  <div class="col-md-2">
+                    <label for="addRechEndDate" class="form-label">End Date</label>
+                    <input type="date" id="addRechEndDate" class="form-control" />
+                  </div>
+                  <div class="col-md-2">
+                    <button type="button" id="filterAddRech" class="btn btn-success w-100">
+                      <i class="fas fa-filter"></i> Filter
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Table -->
+                <div class="table-responsive">
+                  <table class="display table table-striped table-hover">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Action&nbsp;delete</th>
+                        <th>User ID</th>
+                        <th>Admin ID</th>
+                        <th>Mobile</th>
+                        <th>Amount</th>
+                        <th>Add/Cut</th>
+                        <th>Time</th>
+                      </tr>
+                    </thead>
+                    <tbody id="addRechTableBody">
+                      <tr><td colspan="8" class="text-center">Loading...</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="row align-items-center mt-3">
+                  <div class="col-md-5 mb-3 mb-md-0">
+                    <div class="dataTables_info">
+                      Showing Page <span id="addRechCurrentPage">1</span> of <span id="addRechTotalPages">1</span> 
+                      (Total: <span id="addRechTotalRows">0</span> entries)
+                    </div>
+                  </div>
+                  <div class="col-md-7">
+                    <nav aria-label="Table Pagination">
+                      <ul class="pagination justify-content-end">
+                        <li class="page-item">
+                          <a class="page-link" id="addRechPrevious" style="cursor: pointer;">Previous</a>
+                        </li>
+                        <li class="page-item active">
+                          <a class="page-link" id="addRechPageDisplay">1</a>
+                        </li>
+                        <li class="page-item">
+                          <a class="page-link" id="addRechNext" style="cursor: pointer;">Next</a>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Transfers Tab -->
+          <div class="tab-pane fade" id="transfer" role="tabpanel" aria-labelledby="transfer-tab">
+            <div class="card">
+              <!-- Card Header -->
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <h4 class="card-title">Transfers</h4>
+                <div class="input-group" style="width: auto;">
+                  <input type="search" id="searchTransfer" class="form-control" placeholder="Search Mobile" aria-label="Search" />
+                  <button type="button" class="btn btn-primary" onclick="fetchTransfers()">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Filters -->
+              <div class="card-body">
+                <div class="row mb-3 align-items-end">
+                  <div class="col-md-3">
+                    <label for="transferSenderId" class="form-label">Sender ID</label>
+                    <input type="text" id="transferSenderId" class="form-control" placeholder="Enter Sender ID" />
+                  </div>
+                  <div class="col-md-3">
+                    <label for="transferReceiverId" class="form-label">Receiver ID</label>
+                    <input type="text" id="transferReceiverId" class="form-control" placeholder="Enter Receiver ID" />
+                  </div>
+                  <div class="col-md-2">
+                    <label for="transferStartDate" class="form-label">Start Date</label>
+                    <input type="date" id="transferStartDate" class="form-control" />
+                  </div>
+                  <div class="col-md-2">
+                    <label for="transferEndDate" class="form-label">End Date</label>
+                    <input type="date" id="transferEndDate" class="form-control" />
+                  </div>
+                  <div class="col-md-2">
+                    <button type="button" id="filterTransfer" class="btn btn-success w-100">
+                      <i class="fas fa-filter"></i> Filter
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Table -->
+                <div class="table-responsive">
+                  <table class="display table table-striped table-hover">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Action&nbsp;Delete</th>
+                        <th>Sender ID</th>
+                        <th>Receiver ID</th>
+                        <th>Sender Mobile</th>
+                        <th>Receiver Mobile</th>
+                        <th>Amount</th>
+                        <th>Type</th>
+                        <th>Time</th>
+                      </tr>
+                    </thead>
+                    <tbody id="transferTableBody">
+                      <tr><td colspan="9" class="text-center">Click to load data</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="row align-items-center mt-3">
+                  <div class="col-md-5 mb-3 mb-md-0">
+                    <div class="dataTables_info">
+                      Showing Page <span id="transferCurrentPage">1</span> of <span id="transferTotalPages">1</span> 
+                      (Total: <span id="transferTotalRows">0</span> entries)
+                    </div>
+                  </div>
+                  <div class="col-md-7">
+                    <nav aria-label="Table Pagination">
+                      <ul class="pagination justify-content-end">
+                        <li class="page-item">
+                          <a class="page-link" id="transferPrevious" style="cursor: pointer;">Previous</a>
+                        </li>
+                        <li class="page-item active">
+                          <a class="page-link" id="transferPageDisplay">1</a>
+                        </li>
+                        <li class="page-item">
+                          <a class="page-link" id="transferNext" style="cursor: pointer;">Next</a>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Withdrawals Tab -->
+          <div class="tab-pane fade" id="withdraw" role="tabpanel" aria-labelledby="withdraw-tab">
+            <div class="card">
+              <!-- Card Header -->
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <h4 class="card-title">Withdrawals</h4>
+                <div class="input-group" style="width: auto;">
+                  <input type="search" id="searchWithdraw" class="form-control" placeholder="Search Mobile" aria-label="Search" />
+                  <button type="button" class="btn btn-primary" onclick="fetchWithdraws()">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Filters -->
+              <div class="card-body">
+                <div class="row mb-3 align-items-end">
+                  <div class="col-md-2">
+                    <label for="withdrawUserId" class="form-label">User ID</label>
+                    <input type="text" id="withdrawUserId" class="form-control" placeholder="Enter User ID" />
+                  </div>
+                  <div class="col-md-2">
+                    <label for="withdrawStatus" class="form-label">Status</label>
+                    <select id="withdrawStatus" class="form-control">
+                      <option value="">All</option>
+                      <option value="0">Pending</option>
+                      <option value="1">Approved</option>
+                      <option value="2">Rejected</option>
+                    </select>
+                  </div>
+                  <div class="col-md-2">
+                    <label for="withdrawStartDate" class="form-label">Start Date</label>
+                    <input type="date" id="withdrawStartDate" class="form-control" />
+                  </div>
+                  <div class="col-md-2">
+                    <label for="withdrawEndDate" class="form-label">End Date</label>
+                    <input type="date" id="withdrawEndDate" class="form-control" />
+                  </div>
+                  <div class="col-md-2">
+                    <button type="button" id="filterWithdraw" class="btn btn-success w-100">
+                      <i class="fas fa-filter"></i> Filter
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Table -->
+                <div class="table-responsive">
+                  <table class="display table table-striped table-hover">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Action&nbsp;Delete</th>
+                        <th>User ID</th>
+                        <th>Refer ID</th>
+                        <th>Mobile</th>
+                        <th>Old Wallet</th>
+                        <th>Amount</th>
+                        <th>Text Amount</th>
+                        <th>Commission</th>
+                        <th>UPI ID</th>
+                        <th>Bank Details</th>
+                        <th>Status</th>
+                        <th>Time</th>
+                      </tr>
+                    </thead>
+                    <tbody id="withdrawTableBody">
+                      <tr><td colspan="13" class="text-center">Click to load data</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="row align-items-center mt-3">
+                  <div class="col-md-5 mb-3 mb-md-0">
+                    <div class="dataTables_info">
+                      Showing Page <span id="withdrawCurrentPage">1</span> of <span id="withdrawTotalPages">1</span> 
+                      (Total: <span id="withdrawTotalRows">0</span> entries)
+                    </div>
+                  </div>
+                  <div class="col-md-7">
+                    <nav aria-label="Table Pagination">
+                      <ul class="pagination justify-content-end">
+                        <li class="page-item">
+                          <a class="page-link" id="withdrawPrevious" style="cursor: pointer;">Previous</a>
+                        </li>
+                        <li class="page-item active">
+                          <a class="page-link" id="withdrawPageDisplay">1</a>
+                        </li>
+                        <li class="page-item">
+                          <a class="page-link" id="withdrawNext" style="cursor: pointer;">Next</a>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Action Modal -->
+<div class="modal fade" id="actionModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="actionModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="actionModalLabel">Record Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="modalContent">
+          <!-- Dynamic content will be loaded here -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Global Variables for Pagination
+  let addRechPage = 1;
+  let addRechTotalPages = 1;
+  let transferPage = 1;
+  let transferTotalPages = 1;
+  let withdrawPage = 1;
+  let withdrawTotalPages = 1;
+
+  // Tab Click Handlers
+  function loadAddRecharges() {
+    fetchAddRecharges();
+  }
+
+  function loadTransfers() {
+    fetchTransfers();
+  }
+
+  function loadWithdraws() {
+    fetchWithdraws();
+  }
+
+  // ================== ADD RECHARGES ==================
+  function fetchAddRecharges() {
+    const requestData = {
+      page: addRechPage,
+      limit: 10,
+      userid: $('#addRechUserId').val().trim(),
+      mobile: $('#searchAddRech').val().trim(),
+      admin_id: $('#addRechAdminId').val().trim(),
+      start: $('#addRechStartDate').val(),
+      end: $('#addRechEndDate').val()
+    };
+
+    $.ajax({
+      url: '/getAddRecharges',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(requestData),
+      success: function (response) {
+        if (response.status) {
+          const data = response.data;
+
+          // Update pagination info
+          addRechTotalPages = response.total_pages;
+          $('#addRechCurrentPage').text(response.page);
+          $('#addRechTotalPages').text(response.total_pages);
+          $('#addRechTotalRows').text(response.total);
+          $('#addRechPageDisplay').text(response.page);
+
+          // Populate table
+          const tbody = $('#addRechTableBody');
+          tbody.empty();
+
+          if (data.length === 0) {
+            tbody.append('<tr><td colspan="8" class="text-center">No records found</td></tr>');
+            return;
+          }
+
+          data.forEach(item => {
+            const row = `
+              <tr>
+                <td>${item.id}</td>
+                <td>
+                  <i class="fa fa-trash text-danger delete-icon" style="font-size:20px;margin-right:5px;cursor:pointer;" 
+                     data-table="add_rech" data-id="${item.id}"></i>
+                  <i class="fa fa-eye text-primary view-icon" style="font-size:20px;margin-left:5px;cursor:pointer;margin-left:30px;" 
+                     onclick='viewDetails(${JSON.stringify(item)})'></i>
+                </td>
+                <td><a href="/super/user/${item.userid}">${item.userid}</a></td>
+                <td>${item.admin_id || 'N/A'}</td>
+                <td><a href="/super/user/${item.userid}">${item.mobile}</a></td>
+                <td>₹${parseFloat(item.amount).toFixed(2)}</td>
+                <td>${item.addcut}</td>
+                <td>${item.time}</td>
+              </tr>
+            `;
+            tbody.append(row);
+          });
+        }
+      },
+      error: function (xhr, status, error) {
+        console.error('Failed to fetch data:', error);
+        swal("Error", "Failed to load data", "error");
+      }
+    });
+  }
+
+  // ================== TRANSFERS ==================
+  function fetchTransfers() {
+    const requestData = {
+      page: transferPage,
+      limit: 10,
+      sender: $('#transferSenderId').val().trim(),
+      receiver: $('#transferReceiverId').val().trim(),
+      mobile: $('#searchTransfer').val().trim(),
+      start: $('#transferStartDate').val(),
+      end: $('#transferEndDate').val()
+    };
+
+    $.ajax({
+      url: '/getTransfers',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(requestData),
+      success: function (response) {
+        if (response.status) {
+          const data = response.data;
+
+          // Update pagination info
+          transferTotalPages = response.total_pages;
+          $('#transferCurrentPage').text(response.page);
+          $('#transferTotalPages').text(response.total_pages);
+          $('#transferTotalRows').text(response.total);
+          $('#transferPageDisplay').text(response.page);
+
+          // Populate table
+          const tbody = $('#transferTableBody');
+          tbody.empty();
+
+          if (data.length === 0) {
+            tbody.append('<tr><td colspan="9" class="text-center">No records found</td></tr>');
+            return;
+          }
+
+          data.forEach(item => {
+            const row = `
+              <tr>
+                <td>${item.id}</td>
+                <td>
+                  <i class="fa fa-trash text-danger delete-icon" style="font-size:20px;margin-right:5px;cursor:pointer;" 
+                     data-table="transfer" data-id="${item.id}"></i>
+                  <i class="fa fa-eye text-primary view-icon" style="font-size:20px;margin-left:5px;cursor:pointer;margin-left:30px;" 
+                     onclick='viewDetails(${JSON.stringify(item)})'></i>
+                </td>
+                <td><a href="/super/user/${item.sender}">${item.sender}</a></td>
+                <td><a href="/super/user/${item.receiver}">${item.receiver}</a></td>
+                <td>${item.sender_mobile}</td>
+                <td>${item.receiver_mobile}</td>
+                <td>₹${parseFloat(item.amount).toFixed(2)}</td>
+                <td>${item.type}</td>
+                <td>${item.time}</td>
+              </tr>
+            `;
+            tbody.append(row);
+          });
+        }
+      },
+      error: function (xhr, status, error) {
+        console.error('Failed to fetch data:', error);
+        swal("Error", "Failed to load data", "error");
+      }
+    });
+  }
+
+  // ================== WITHDRAWALS ==================
+  function fetchWithdraws() {
+    const requestData = {
+      page: withdrawPage,
+      limit: 10,
+      userid: $('#withdrawUserId').val().trim(),
+      mobile: $('#searchWithdraw').val().trim(),
+      status: $('#withdrawStatus').val(),
+      start: $('#withdrawStartDate').val(),
+      end: $('#withdrawEndDate').val()
+    };
+
+    $.ajax({
+      url: '/getWithdraws',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify(requestData),
+      success: function (response) {
+        if (response.status) {
+          const data = response.data;
+
+          // Update pagination info
+          withdrawTotalPages = response.total_pages;
+          $('#withdrawCurrentPage').text(response.page);
+          $('#withdrawTotalPages').text(response.total_pages);
+          $('#withdrawTotalRows').text(response.total);
+          $('#withdrawPageDisplay').text(response.page);
+
+          // Populate table
+          const tbody = $('#withdrawTableBody');
+          tbody.empty();
+
+          if (data.length === 0) {
+            tbody.append('<tr><td colspan="13" class="text-center">No records found</td></tr>');
+            return;
+          }
+
+          data.forEach(item => {
+            const bankDetails = item.bankaccount ? 
+              `${item.bankname}<br>${item.bankaccount}<br>${item.bankholder}<br>IFSC: ${item.ifsccode}` : 
+              'N/A';
+            
+            const statusBadge = item.status == 1 ? 
+              '<span class="badge bg-success">Approved</span>' : 
+              item.status == 2 ? '<span class="badge bg-danger">Rejected</span>' : 
+              '<span class="badge bg-warning">Pending</span>';
+
+            const row = `
+              <tr>
+                <td>${item.id}</td>
+                <td>
+                  <i class="fa fa-trash text-danger delete-icon" style="font-size:20px;margin-right:5px;cursor:pointer;" 
+                     data-table="withdraw" data-id="${item.id}"></i>
+                  <i class="fa fa-eye text-primary view-icon" style="font-size:20px;margin-left:5px;cursor:pointer;margin-left:30px;" 
+                     onclick='viewDetails(${JSON.stringify(item)})'></i>
+                </td>
+                <td><a href="/super/user/${item.userid}">${item.userid}</a></td>
+                <td>${item.referid || 'N/A'}</td>
+                <td><a href="/super/user/${item.userid}">${item.mobile}</a></td>
+                <td>₹${parseFloat(item.old_wallet).toFixed(2)}</td>
+                <td>₹${parseFloat(item.amount).toFixed(2)}</td>
+                <td>₹${parseFloat(item.textamount).toFixed(2)}</td>
+                <td>₹${parseFloat(item.commission).toFixed(2)}</td>
+                <td>${item.upiid || 'N/A'}</td>
+                <td>${bankDetails}</td>
+                <td>${statusBadge}</td>
+                <td>${item.time}</td>
+              </tr>
+            `;
+            tbody.append(row);
+          });
+        }
+      },
+      error: function (xhr, status, error) {
+        console.error('Failed to fetch data:', error);
+        swal("Error", "Failed to load data", "error");
+      }
+    });
+  }
+
+  // ================== VIEW DETAILS MODAL ==================
+  function viewDetails(item) {
+    let content = '<div class="table-responsive"><table class="table table-bordered">';
+
+    Object.keys(item).forEach(key => {
+      content += `<tr><th style="width: 30%;">${key}</th><td>${item[key] !== null ? item[key] : 'N/A'}</td></tr>`;
+    });
+
+    content += '</table></div>';
+    $('#modalContent').html(content);
+    $('#actionModal').modal('show');
+  }
+
+  // ================== DELETE RECORD ==================
+  $(document).on('click', '.delete-icon', function (e) {
+    const recordId = $(this).data('id');
+    const tableName = $(this).data('table');
+
+    swal({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      type: "warning",
+      buttons: {
+        confirm: {
+          text: "Yes, delete it!",
+          className: "btn btn-success",
+        },
+        cancel: {
+          visible: true,
+          className: "btn btn-danger",
+        },
+      },
+    }).then((willDelete) => {
+      if (willDelete) {
+        $.ajax({
+          url: '/recordsDeleted',
+          type: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify({
+            tableName: tableName,
+            tableidd: recordId,
+          }),
+          success: function (response) {
+            if (response.status == 1) {
+              swal({
+                title: "Deleted!",
+                text: response.message,
+                type: "success",
+                buttons: {
+                  confirm: {
+                    className: "btn btn-success",
+                  },
+                },
+              });
+              
+              // Reload appropriate tab
+              if (tableName === 'add_rech') fetchAddRecharges();
+              else if (tableName === 'transfer') fetchTransfers();
+              else if (tableName === 'withdraw') fetchWithdraws();
+            } else {
+              swal({
+                title: "Error!",
+                text: response.message,
+                type: "error",
+              });
+            }
+          },
+          error: function (xhr, status, error) {
+            swal("Error", "Failed to delete record", "error");
+          }
+        });
+      } else {
+        swal.close();
+      }
+    });
+  });
+
+  // ================== PAGINATION CONTROLS ==================
+  // Add Recharges Pagination
+  $('#addRechPrevious').on('click', function () {
+    if (addRechPage > 1) {
+      addRechPage--;
+      fetchAddRecharges();
+    }
+  });
+
+  $('#addRechNext').on('click', function () {
+    if (addRechPage < addRechTotalPages) {
+      addRechPage++;
+      fetchAddRecharges();
+    }
+  });
+
+  $('#filterAddRech').on('click', function () {
+    addRechPage = 1;
+    fetchAddRecharges();
+  });
+
+  // Transfers Pagination
+  $('#transferPrevious').on('click', function () {
+    if (transferPage > 1) {
+      transferPage--;
+      fetchTransfers();
+    }
+  });
+
+  $('#transferNext').on('click', function () {
+    if (transferPage < transferTotalPages) {
+      transferPage++;
+      fetchTransfers();
+    }
+  });
+
+  $('#filterTransfer').on('click', function () {
+    transferPage = 1;
+    fetchTransfers();
+  });
+
+  // Withdrawals Pagination
+  $('#withdrawPrevious').on('click', function () {
+    if (withdrawPage > 1) {
+      withdrawPage--;
+      fetchWithdraws();
+    }
+  });
+
+  $('#withdrawNext').on('click', function () {
+    if (withdrawPage < withdrawTotalPages) {
+      withdrawPage++;
+      fetchWithdraws();
+    }
+  });
+
+  $('#filterWithdraw').on('click', function () {
+    withdrawPage = 1;
+    fetchWithdraws();
+  });
+
+  // ================== EXPORT FUNCTIONALITY ==================
+  $('#exportButton').on('click', function () {
+    const activeTab = $('.nav-link.active').attr('id');
+    const endpoint = 'exportdata';
+    let tables = "add_rech";
+    let filename = 'export.csv';
+
+    if (activeTab === 'addRech-tab') {
+      tables = 'add_rech';
+      filename = 'add_recharges.csv';
+    } else if (activeTab === 'transfer-tab') {
+      tables = 'transfer';
+      filename = 'transfers.csv';
+    } else if (activeTab === 'withdraw-tab') {
+      tables = 'withdraw';
+      filename = 'withdrawals.csv';
+    }
+
+    // Call export API
+    fetch(endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({tables}),
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.blob();
+        } else {
+          throw new Error('Failed to export data');
+        }
+      })
+      .then((blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+      })
+      .catch((error) => {
+        console.error(error);
+        swal('Error', 'Failed to export data', 'error');
+      });
+  });
+
+  // ================== INITIAL LOAD ==================
+  $(document).ready(function() {
+    fetchAddRecharges();
+  });
+</script>
+
+<%- include('../layout/footer') %>

@@ -1,0 +1,284 @@
+<%- include('layout/header') %>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <div class="pt-4 m-3"></div>
+    <div class="pt-4 m-3"></div>
+    <div class="row m-3 justify-content-around">
+        <div class="col-md-5" style="display: none;">
+            <div class="card card-profile">
+                <div class="card-header" style="background-image: url('assets/img/blogpost.jpg')">
+                    <div class="profile-picture">
+                        <div class="avatar avatar-xl">
+                            <img src="/assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle" />
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="user-profile text-center">
+                        <div class="name">Hizrian, 19</div>
+                        <div class="job">Frontend Developer</div>
+                        <div class="desc">A man who hates loneliness</div>
+                        <div class="social-media">
+                            <a class="btn btn-info btn-twitter btn-sm btn-link" href="#">
+                                <span class="btn-label just-icon"><i class="icon-social-twitter"></i>
+                                </span>
+                            </a>
+                            <a class="btn btn-primary btn-sm btn-link" rel="publisher" href="#">
+                                <span class="btn-label just-icon"><i class="icon-social-facebook"></i>
+                                </span>
+                            </a>
+                            <a class="btn btn-danger btn-sm btn-link" rel="publisher" href="#">
+                                <span class="btn-label just-icon"><i class="icon-social-instagram"></i>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="view-profile">
+                            <a href="#" class="btn btn-secondary w-100">View Full Profile</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="row user-stats text-center">
+                        <div class="col">
+                            <div class="number">125</div>
+                            <div class="title">Post</div>
+                        </div>
+                        <div class="col">
+                            <div class="number">25K</div>
+                            <div class="title">Followers</div>
+                        </div>
+                        <div class="col">
+                            <div class="number">134</div>
+                            <div class="title">Following</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Admin Profile Update </h4>
+                </div>
+                <div class="card-body">
+                    <ul class="nav nav-pills nav-secondary nav-pills-no-bd" id="pills-tab-without-border"
+                        role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="pills-home-tab-nobd" data-bs-toggle="pill"
+                                href="#pills-home-nobd" role="tab" aria-controls="pills-home-nobd"
+                                aria-selected="true">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-profile-tab-nobd" data-bs-toggle="pill"
+                                href="#pills-profile-nobd" role="tab" aria-controls="pills-profile-nobd"
+                                aria-selected="false">Edit</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="pills-contact-tab-nobd" data-bs-toggle="pill"
+                                href="#pills-contact-nobd" role="tab" aria-controls="pills-contact-nobd"
+                                aria-selected="false">Password</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content mt-2 mb-3" id="pills-without-border-tabContent">
+                        <div class="tab-pane fade show active" id="pills-home-nobd" role="tabpanel"
+                            aria-labelledby="pills-home-tab-nobd">
+
+                            <div class="row">
+                                <p class="col-6">User Name</p>
+                                <p class="col-6" id="username1"> : Londing...</p>
+                            </div>
+                            <div class="row">
+                                <p class="col-6">Mobile</p>
+                                <p class="col-6" id="mobile1"> : Londing...</p>
+                            </div>
+                            <div class="row">
+                                <p class="col-6">WhatsApp</p>
+                                <p class="col-6" id="whatapp1"> : Londing...</p>
+                            </div>
+                            <div class="row">
+                                <p class="col-6">Email</p>
+                                <p class="col-6" id="email1"> : Londing...</p>
+                            </div>
+                            <div class="row">
+                                <p class="col-6">Upi Key</p>
+                                <p class="col-6" id="getway1"> : Londing...</p>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade" id="pills-profile-nobd" role="tabpanel" aria-labelledby="pills-profile-tab-nobd">
+                            <form>
+
+                                <div class="form-group form-inline">
+                                    <label for="inlineinput" class="col-md-3 col-form-label">User Name</label>
+                                    <input type="text" class="form-control input-full" id="username2" placeholder="User Name" />
+                                </div>
+                                <div class="form-group form-inline">
+                                    <label for="inlineinput" class="col-md-3 col-form-label">Mobile Number</label>
+                                    <input type="text" class="form-control input-full" id="mobile2" placeholder="Mobile Number" />
+                                </div>
+                                <div class="form-group form-inline">
+                                    <label for="inlineinput" class="col-md-3 col-form-label">WhatsApp</label>
+                                    <input type="text" class="form-control input-full" id="whatapp2" placeholder="WhatsApp Number" />
+                                </div>
+                                <div class="form-group form-inline">
+                                    <label for="inlineinput" class="col-md-3 col-form-label">Eamil</label>
+                                    <input type="text" class="form-control input-full" id="email2" placeholder="Email" />
+                                </div>
+                                <div class="form-group form-inline">
+                                    <label for="inlineinput" class="col-md-3 col-form-label">Getway Key</label>
+                                    <input type="text" class="form-control input-full" id="getway2" placeholder="Getway key" />
+                                </div>
+                                <button class="btn btn-success text-center" type="button" onclick="DataSave()">Submit</button>
+                            </form>
+                           
+                              
+                        </div>
+                        <div class="tab-pane fade" id="pills-contact-nobd" role="tabpanel" aria-labelledby="pills-contact-tab-nobd">
+                            <div class="form-group form-inline">
+                                <label for="inlineinput" class="col-md-3 col-form-label">Old Password</label>
+                                  <input type="text" class="form-control input-full" id="password1" placeholder="Old Password" />
+                              </div>
+                              <div class="form-group form-inline">
+                                <label for="inlineinput" class="col-md-3 col-form-label">New Password</label>
+                                  <input type="text" class="form-control input-full" id="password2" placeholder="New Password" />
+                              </div>
+                              <div class="form-group form-inline">
+                                <label for="inlineinput" class="col-md-3 col-form-label">Confirm Password</label>
+                                  <input type="text" class="form-control input-full" id="password3" placeholder="Confirm Password" />
+                              </div>
+                              <button type="button" onclick="Pass()" class="btn btn-danger">Change Password</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    function initializePage() {
+        $.ajax({
+        url: 'userPorfil',
+        type: 'POST',
+        success: function(result) {
+            const datas = result.adminDa[0];
+            document.getElementById('username1').innerHTML = datas.username;
+            document.getElementById('username2').value = datas.username;
+            document.getElementById('mobile1').innerHTML = datas.mobile;
+            document.getElementById('mobile2').value = datas.mobile;
+            document.getElementById('email1').innerHTML = datas.email;
+            document.getElementById('email2').value = datas.email;
+            document.getElementById('whatapp1').innerHTML = datas.whatapp;
+            document.getElementById('whatapp2').value = datas.whatapp;
+            document.getElementById('getway1').innerHTML = datas.upikey;
+            document.getElementById('getway2').value = datas.upikey;
+           
+        },
+           error: function(xhr, status, error) {
+                console.error("Error: " + error);
+            }
+        });
+    }
+    function DataSave(){
+        var name =   document.getElementById('username2').value;
+        var mobile =   document.getElementById('mobile2').value;
+        var email =   document.getElementById('email2').value;
+        var whatapp =   document.getElementById('whatapp2').value;
+        var getway =   document.getElementById('getway2').value;
+        if(!name || !mobile || !email ){
+            return ;
+        }
+        const requestData1 = {
+            name,
+            mobile,
+            email,
+            whatapp,
+            getway
+        };
+        $.ajax({
+            url : 'profileCha',
+            type : 'post',
+            contentType: 'application/json',
+            data: JSON.stringify(requestData1),
+            success : function(respona){
+                if(respona.Qstatus == 1){
+                    console.log(respona.Qstatus + "we");
+                    document.getElementById('username1').innerHTML = name;
+                    document.getElementById('username2').value = name;
+                    document.getElementById('mobile1').innerHTML = mobile;
+                    document.getElementById('mobile2').value = mobile;
+                    document.getElementById('email1').innerHTML = email;
+                    document.getElementById('email2').value = email;
+                    document.getElementById('whatapp1').innerHTML = whatapp;
+                    document.getElementById('whatapp2').value = whatapp;
+                    document.getElementById('getway1').innerHTML = getway;
+                    document.getElementById('getway2').value = getway;
+                    swal(respona.message, {
+                        buttons: {
+                            confirm: {
+                                className: "btn btn-success",
+                            },
+                        },
+                    });
+                }else{
+                    swal(respona.message, {
+                        buttons: {
+                            confirm: {
+                                className: "btn btn-danger",
+                            },
+                        },
+                    });
+                }
+            }
+        });
+    }
+    function Pass(){
+        let password1 = document.getElementById('password1').value;
+        let password2 = document.getElementById('password2').value;
+        let password3 = document.getElementById('password3').value;
+        if(password2 != password3 && password1 == ""){
+            swal('Password Not Same', {
+                buttons: {
+                    confirm: {
+                        className: "btn btn-danger",
+                    },
+                },
+            });
+            return;
+        }
+        const requestData = {
+            password1,
+            password2,
+            password3,
+        };
+        $.ajax({
+            url : 'adminPassC',
+            type : 'post',
+            contentType: 'application/json',
+            data: JSON.stringify(requestData),
+            success : function(respona){
+                if(respona.Qstatus == 1){
+                    document.getElementById('password1').value = "";
+                    document.getElementById('password2').value = "";
+                    document.getElementById('password3').value = "";
+                    swal(respona.message, {
+                        buttons: {
+                            confirm: {
+                                className: "btn btn-success",
+                            },
+                        },
+                    });
+                }else{
+                    swal(respona.message, {
+                        buttons: {
+                            confirm: {
+                                className: "btn btn-success",
+                            },
+                        },
+                    });
+                }
+            }
+        });
+    }
+    window.onload = function(){
+        initializePage();
+    }
+    </script>
+    <%- include('layout/footer') %>

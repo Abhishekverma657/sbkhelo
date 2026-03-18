@@ -1,0 +1,445 @@
+<%- include('../layout/header') %>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<div class="container">
+    <div class="page-inner">
+      <div class="page-header" style="justify-content: space-between;">
+        <h3 class="fw-bold mb-3">All User</h3>
+        <ul class="breadcrumbs mb-3">
+          <li class="nav-home">
+            <a href="#">
+              <i class="icon-home"></i>
+            </a>
+          </li>
+          <li class="separator">
+            <i class="icon-arrow-right"></i>
+          </li>
+          <li class="nav-item">
+            <a href="#">User</a>
+          </li>
+          <li class="separator">
+            <i class="icon-arrow-right"></i>
+          </li>
+          <li class="nav-item">
+            <a href="#">All User</a>
+          </li>
+        </ul>
+        <button class="btn btn-warning text-light" id="exportButton" style="margin-right: 0;">Export</button>
+      </div>
+<!-- -->
+<div class="row pt-4">
+    <div class="col-sm-6 col-md-4" onclick="window.location.href='/super/pendingwithdrawl'">
+        <div class="card card-stats card-round">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-icon">
+                <div class="icon-big text-center icon-warning bubble-shadow-small">
+                  <i class="icon-wallet"></i>
+                </div>
+              </div>
+              <div class="col col-stats ms-3 ms-sm-0">
+                <div class="numbers">
+                  <p class="card-category">Pending || Total</p>
+                  <h4 class="card-title" id="totalPending">Londing..</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-4" onclick="window.location.href='/super/successwithdrawl'">
+        <div class="card card-stats card-round">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-icon">
+                <div class="icon-big text-center icon-success bubble-shadow-small">
+                  <i class="icon-wallet"></i>
+                </div>
+              </div>
+              <div class="col col-stats ms-3 ms-sm-0">
+                <div class="numbers">
+                  <p class="card-category">Success || Total</p>
+                  <h4 class="card-title" id="totalSucess">Londing..</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-md-4" onclick="window.location.href='/super/rejectwithdrawl'">
+        <div class="card card-stats card-round">
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-icon">
+                <div class="icon-big text-center icon-danger bubble-shadow-small">
+                  <i class="icon-wallet"></i>
+                </div>
+              </div>
+              <div class="col col-stats ms-3 ms-sm-0">
+                <div class="numbers">
+                  <p class="card-category">Reject || Total</p>
+                  <h4 class="card-title" id="totalReject">Londing..</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    
+    
+</div>            
+<!-- -->      
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <!-- Card Header -->
+            <div class="card-header d-flex justify-content-between align-items-center">
+              <h4 class="card-title">Basic</h4>
+              <div class="input-group" style="width: auto;">
+                <input type="search" id="form1" class="form-control" placeholder="Search" aria-label="Search" />
+                <button type="button" class="btn btn-primary">
+                  <i class="fas fa-search"></i>
+                </button>
+              </div>
+            </div>
+      
+             <!-- Date Filters -->
+      <div class="card-body">
+        <div class="row mb-3 align-items-end">
+          <div class="col-md-4">
+            <label for="startDate" class="form-label">Start Date</label>
+            <input type="date" id="startDate" class="form-control" />
+          </div>
+          <div class="col-md-4">
+            <label for="endDate" class="form-label">End Date</label>
+            <input type="date" id="endDate" class="form-control" />
+          </div>
+          <div class="col-md-4">
+            <button type="button" id="filterButton" class="btn btn-success w-100">
+              <i class="fas fa-filter"></i> Filter
+            </button>
+          </div>
+        </div>
+      
+              <!-- Table -->
+              <div class="table-responsive">
+                <table  class="display table table-striped table-hover">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Active</th>
+                      <th>Type</th>
+                      <th>user id</th>
+                      <th>Mobile</th>
+                      <th>amount</th>
+                      <th>Upi</th>
+                      <th>Bank</th>
+                      <th>Bank Name</th>
+                      <th>Holder</th>
+                      <th>ifsccode</th>
+                      <th>user wallet</th>
+                      <th>date</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                        <th>#</th>
+                        <th>Active</th>
+                        <th>Type</th>
+                        <th>user id</th>
+                        <th>Mobile</th>
+                        <th>amount</th>
+                        <th>Upi</th>
+                        <th>Bank</th>
+                        <th>Bank Name</th>
+                        <th>Holder</th>
+                        <th>ifsccode</th>
+                        <th>user wallet</th>
+                        <th>date</th>
+        
+                    </tr>
+                  </tfoot>
+                  <tbody id="tableprint">
+                                       
+                  </tbody>
+                </table>
+              </div>
+      
+              <!-- Pagination -->
+              <div class="row align-items-center">
+                <div class="col-md-5 mb-3 mb-md-0">
+                  <div class="dataTables_info">
+                    Showing Pages <span id="totalenter"></span> entries <span id="totalRows"> page</span> 
+                  </div>
+                </div>
+                <div class="col-md-7">
+                  <nav aria-label="Table Pagination">
+                    <ul class="pagination justify-content-end">
+                      <li class="page-item ">
+                        <a class="page-link" id="perviousP">Previous</a>
+                      </li>
+                      <li class="page-item active">
+                        <a class="page-link"  id="totalpageshow">2</a>
+                      </li>
+                      <li class="page-item">
+                        <a class="page-link"  id="nextP">Next</a>
+                      </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+       
+      </div>
+    </div>
+  </div>
+  
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog ">
+    <div class="modal-content ">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+       
+        <!-- Form Section -->
+        <form action="#" class="pt-2">
+          <label for="selectMenu" class="form-label">Choose an Option</label>
+          <select id="selectMenu" class="form-select mb-3" aria-label="Default select example" required>
+            <option selected disabled>Select an option</option>
+            <option value="1">Approvel</option>
+            <option value="3">Reject</option>
+          </select>
+          <button type="button" onclick="depostSubmit()" class="btn btn-success w-100">Save</button>
+        </form>
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal -->
+
+  <script>
+    let page = 1;
+    let totalpage = 1;
+
+      function fetchData() {
+        const requestData = {
+          item: $('#form1').val().trim(),
+          page : page,
+          status : 3,
+          tableName : 'withdraw',
+        };
+        const startDate = $('#startDate').val();
+        const endDate = $('#endDate').val();
+        if (startDate && endDate) {
+          requestData.startdate = startDate;
+          requestData.enddate = endDate;
+        }
+
+        // Make AJAX request to fetch data
+        $.ajax({
+          url: '/Withdrawls', // Your Node.js API endpoint
+          type: 'POST',
+          contentType: 'application/json',
+          data: JSON.stringify(requestData),
+          success: function (response) {
+            const user =response; // Corrected this line from 'respona' to 'response'
+            var tbody = document.getElementById("tableprint");
+            tbody.innerHTML = "";
+            var ve = user.reData;
+            totalpage =  user.pagination.totalPages;
+            document.getElementById("totalpageshow").innerHTML = user.pagination.currentPage; 
+            document.getElementById("totalenter").innerHTML = user.pagination.totalPages; 
+            document.getElementById("totalRows").innerHTML = user.pagination.totalRows; 
+            document.getElementById("totalPending").innerHTML = user.DesPending; 
+            document.getElementById("totalSucess").innerHTML = user.DesSuccess; 
+            document.getElementById("totalReject").innerHTML = user.DesReject; 
+            ve.forEach(element => {
+              var row = document.createElement("tr");
+              var td = 
+                  "<th scope='row'>" + element.id + " </th>"
+                  + "<th>"
+                  + "<i class='fa fa-trash text-danger delete-icon' type='button' id='alert_demo_7' style='font-size:20px;margin-right:5px' data-da='" + element.id + "'></i>"
+                  
+                  + "</th>"
+                  + "<td>" + element.type + "</td>"
+                  + "<td>" + element.userid + "</td>"
+                  + "<td><a href='/user/"+element.id+"'>" + element.mobile + "</a></td>"
+                  + "<td>" + element.amount + "</td>"
+                  + "<td onclick='copyBtn(this)' data-da='"+ element.upiid +"'>" + element.upiid + "</td>"
+                  + "<td onclick='copyBtn(this)' data-da='"+ element.bankaccount +"'>" + element.bankaccount + "</td>"
+                  + "<td onclick='copyBtn(this)' data-da='"+ element.bankname +"'>" + element.bankname + "</td>"
+                  + "<td onclick='copyBtn(this)' data-da='"+ element.bankholder +"'>" + element.bankholder + "</td>"
+                  + "<td onclick='copyBtn(this)' data-da='"+ element.ifsccode +"'>" + element.ifsccode + "</td>"
+                  + "<td>" + element.userwallet + "</td>"
+                  + "<td>" + element.time + "</td>"
+              ;
+              row.innerHTML = td;
+
+              tbody.appendChild(row);
+              // pagenumber.innerHTML = page;
+            });
+          },
+
+          error: function (xhr, status, error) {
+            console.error('Failed to fetch data:', error);
+          },
+        });
+      }
+  
+    var idd;
+    function action(par) {
+      idd = par.getAttribute("data-idd");
+    }
+    function depostSubmit(){
+      console.log(idd);
+
+    }
+      // Load data initially
+      fetchData();
+  
+      // Reload data on search input change
+      $('#form1').on('keyup', function () {
+        fetchData();
+      });
+  
+      // Reload data on date filter button click
+      $('#filterButton').on('click', function () {
+        fetchData();
+      });
+      $('#perviousP').on('click', function () {
+        if(page > 1){
+          page--;
+          fetchData();
+        }
+      });
+      $('#nextP').on('click', function () {
+
+        if(page < totalpage){
+          page++;
+          fetchData();
+        }
+      });
+
+
+    function copyBtn(pata) {
+        var idd = pata.getAttribute("data-da");
+        console.log("data-da:", idd); // Confirm the attribute value
+        navigator.clipboard.writeText(idd);
+    
+          swal("copied ! "+ idd +"", {
+            buttons: {
+              confirm: {
+                className: "btn btn-success",
+              },
+            },
+          });
+
+    }   
+
+  </script>
+  <script>
+    $(document).on('click', '.delete-icon', function (e) {
+    const recordsIdd = $(this).data('da');
+    const requestData1 = {
+      tableName : 'withdraw',
+      tableidd: recordsIdd,
+    };
+    swal({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        type: "warning",
+        buttons: {
+            confirm: {
+                text: "Yes, delete it!",
+                className: "btn btn-success",
+            },
+            cancel: {
+                visible: true,
+                className: "btn btn-danger",
+            },
+        },
+    }).then((Delete) => {
+        if (Delete) {
+          $.ajax({
+            url: '/recordsDeleted', // Your Node.js API endpoint
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(requestData1),
+            success: function (response) {
+              const user =response;
+              if(response.status == 1){
+                swal({
+                  title: "Deleted!",
+                  text: response.message,
+                  type: "success",
+                  buttons: {
+                    confirm: {
+                      className: "btn btn-success",
+                    },
+                  },
+                  });
+                  fetchData();
+              }else{
+                swal({
+                  title: "Sever Error!",
+                  text: response.message,
+                  type: "info",
+                });
+              }
+            }
+          });
+            
+        } else {
+            swal.close();
+        }
+    });
+});
+
+  </script>
+<script>
+  document.getElementById('exportButton').addEventListener('click', function () {
+    // Trigger export with status = 1
+    fetch('/depostipendingEXP', {
+      method: 'POST', // Use POST to send data
+      headers: {
+        'Content-Type': 'application/json', // Set content type
+      },
+      body: JSON.stringify({ status: 0 }), // Send status = 1
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.blob(); // Expect a file download
+        } else {
+          throw new Error('Failed to export data');
+        }
+      })
+      .then((blob) => {
+        // Create a download link and click it
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'exported_Pending_Deposit.csv'; // Filename
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
+      })
+      .catch((error) => {
+        console.error(error);
+        alert('Error exporting data');
+      });
+  });
+</script>
+
+
+<%- include('../layout/footer') %>

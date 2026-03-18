@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Admin Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --sidebar-bg-light: linear-gradient(180deg, #000000, #1b263b);
+      --sidebar-bg-dark: linear-gradient(180deg, #000000, #1c1c2b);
+      --header-bg-light: #fff;
+      --header-bg-dark: #333333;
+      --card-bg-light: #fff;
+      --card-bg-dark: #272727;
+      --text-light: #000000;
+      --text-dark: #fff;
+      --light-text-light: #ffffff;
+      --light-text-dark: #bbb;
+      --border-radius: 10px;
+      --bg-light: #f5f6fa;
+      --bg-dark: #000000;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--bg-light);
+      color: var(--text-light);
+    }
+
+    body.dark {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background: var(--sidebar-bg-light);
+      width: 250px;
+      min-width: 250px;
+      display: flex;
+      flex-direction: column;
+      color: white;
+      padding: 20px 0;
+      transition: transform 0.3s ease, width 0.3s;
+      z-index: 200;
+    }
+
+    body.dark .sidebar {
+      background: var(--sidebar-bg-dark);
+    }
+
+    .sidebar.hidden {
+      transform: translateX(-250px);
+    }
+
+    .sidebar h2 {
+      margin-left: 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .sidebar ul {
+      margin-top: 30px;
+      list-style: none;
+      padding: 0;
+    }
+
+    .sidebar li {
+      padding: 15px 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .sidebar li:hover,
+    .sidebar li.active {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* Main Section */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      height: 100%;
+    }
+
+    /* Header */
+    .header {
+      background: var(--header-bg-light);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #eaeaea;
+    }
+
+    body.dark .header {
+      background: var(--header-bg-dark);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .menu-btn {
+      font-size: 22px;
+      cursor: pointer;
+      color: inherit;
+    }
+
+    .search-box {
+      background: #f0f2f5;
+      padding: 8px 12px;
+      border-radius: var(--border-radius);
+      display: flex;
+      align-items: center;
+      width: 250px;
+    }
+
+    body.dark .search-box {
+      background: #333;
+    }
+
+    .search-box input {
+      border: none;
+      background: transparent;
+      outline: none;
+      margin-left: 8px;
+      color: inherit;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .theme-toggle {
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    /* Cards */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .card {
+      background: var(--card-bg-light);
+      padding: 20px;
+      border-radius: var(--border-radius);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    body.dark .card {
+      background: var(--card-bg-dark);
+    }
+
+    .card h3 {
+      color: var(--light-text-light);
+      font-size: 14px;
+    }
+
+    body.dark .card h3 {
+      color: var(--light-text-dark);
+    }
+
+    .card h2 {
+      margin-top: 5px;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    /* Recent Activity Table */
+    .recent {
+      background: var(--card-bg-light);
+      margin: 0 20px 20px;
+      padding: 20px;
+      border-radius: var(--border-radius);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    body.dark .recent {
+      background: var(--card-bg-dark);
+    }
+
+    .recent table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .recent th,
+    .recent td {
+      padding: 10px;
+      text-align: left;
+    }
+
+    .recent th {
+      color: var(--light-text-light);
+      font-size: 14px;
+    }
+
+    body.dark .recent th {
+      color: var(--light-text-dark);
+    }
+
+    .recent tr:nth-child(even) {
+      background: rgba(0, 0, 0, 0.02);
+    }
+
+    body.dark .recent tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    /* Mobile View */
+    @media (max-width: 768px) {
+      .sidebar {
+        position: fixed;
+        height: 100%;
+        top: 0;
+        left: 0;
+      }
+
+      .search-box {
+        display: none;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        position: fixed;
+        height: 100%;
+        top: 0;
+        left: 0;
+        transform: translateX(-250px);
+        transition: transform 0.3s ease;
+      }
+
+      .sidebar.hidden {
+        transform: translateX(-250px);
+      }
+
+      .sidebar:not(.hidden) {
+        transform: translateX(0);
+      }
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 250px;
+      height: 100vh;
+      background: var(--sidebar-bg-light);
+      transition: transform 0.3s ease;
+      z-index: 1;
+    }
+
+    .sidebar.hidden {
+      transform: translateX(-250px);
+    }
+
+    .main {
+      margin-left: 250px;
+      transition: margin-left 0.3s ease;
+    }
+
+    .sidebar.hidden+.main {
+      margin-left: 0;
+    }
+
+    @media (min-width: 768px) {
+      .main {
+        margin-left: 250px;
+        transition: margin-left 0.3s ease;
+      }
+
+      .sidebar.hidden+.main {
+        margin-left: 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+
+        transform: translateX(-250px);
+      }
+    }
+
+    @keyframes slide-in {
+      0% {
+        transform: translateY(-20px);
+        opacity: 0;
+      }
+
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .animate-slide-in {
+      animation: slide-in 0.3s ease-out;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <h2>Agent Dashboard</h2>
+<ul id="sidebarMenu">
+  <li onclick="window.location.href='/agent/dashboard'"><i class="fa-solid fa-gauge"></i> Dashboard</li>
+  <li onclick="window.location.href='/agent/user'"><i class="fa-solid fa-users"></i> Users</li>
+  <li onclick="window.location.href='/agent/deposit'"><i class="fa-solid fa-chart-line"></i> Deposit</li>
+  <li onclick="window.location.href='/agent/betting'"><i class="fa-solid fa-chart-line"></i> Betting</li>
+  <li onclick="window.location.href='/agent/profile'"><i class="fa-solid fa-gear"></i> Profile</li>
+  <li><i class="fa-solid fa-circle-question"></i> Help</li>
+</ul>
+
+<script>
+  document.querySelectorAll("#sidebarMenu li").forEach(li => {
+    let targetUrl = li.getAttribute("onclick")?.match(/'([^']+)'/);
+    if (targetUrl && window.location.pathname === targetUrl[1]) {
+      li.classList.add("active");
+    }
+  });
+</script>
+
+<style>
+  .active {
+    background: #007bff;
+    color: white;
+  }
+</style>
+
+  </div>
+  <!-- Main -->
+  <div class="main">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-left">
+        <i class="fa-solid fa-bars menu-btn" id="menuBtn"></i>
+        <div class="search-box">
+          <i class="fa-solid fa-search"></i>
+          <input type="text" placeholder="Search">
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="theme-toggle" id="themeToggle">🌙</div>
+        <img src="https://dilsewin.in/admin/assets/img/profile-img.jpg" alt="Profile" style="border-radius: 50%;width: 50px;">
+      </div>
+    </div>
