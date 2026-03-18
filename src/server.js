@@ -36,16 +36,14 @@ app.post('/login', (req, res) => {
   res.json({ status: 'success' });
 });
 
-// Express app listens on port 3000
-const APP_PORT = 4009;
-
-// app.listen(APP_PORT, "0.0.0.0", () => {
-//   console.log(`Server running on http://0.0.0.0:${APP_PORT}`);
-// });
+// Express app listens on port
+const APP_PORT = process.env.APP_PORT || 2022;
 
 app.listen(APP_PORT, () => {
   console.log(`Express server is running at http://localhost:${APP_PORT}/`);
 });
+
+
 
 // Create a separate server for Socket.IO on port 4000
 // const socketServer = http.createServer();
