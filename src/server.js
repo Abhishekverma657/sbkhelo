@@ -6,8 +6,7 @@ import http from 'http';
 // import { Server as SocketIoServer } from 'socket.io';
 // import socketIoController from './controller/socket/aviatorController.js';
 import cors from 'cors'; // <== ADD THIS LINE
-// import  "./Cronjob/min5.js"; // cron job
-// import  "./Cronjob/agentcomm.js"; // cron job
+
 
 import dotenv from "dotenv";
 dotenv.config();
